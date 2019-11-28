@@ -17,9 +17,7 @@
 
 namespace Cvc\Typo3\CvcWebauthn\Service;
 
-use Cvc\Typo3\CvcWebauthn\Domain\Repository\KeyRepository;
 use Cvc\Typo3\CvcWebauthn\Http\WebAuthnSession;
-use Cvc\Typo3\CvcWebauthn\WebAuthn\PublicKeyCredentialSourceRepository;
 use TYPO3\CMS\Core\Authentication\AuthenticationService;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Domain\Repository\BackendUserRepository;
@@ -27,11 +25,6 @@ use TYPO3\CMS\Extbase\Object\ObjectManager;
 
 class WebAuthnAuthenticationService extends AuthenticationService
 {
-    /**
-     * @var PublicKeyCredentialSourceRepository
-     */
-    private $publicKeyCredentialSourceRepository;
-
     /**
      * @var BackendUserRepository
      */
@@ -43,19 +36,12 @@ class WebAuthnAuthenticationService extends AuthenticationService
     private $webAuthnService;
 
     /**
-     * @var KeyRepository
-     */
-    private $keyRepository;
-
-    /**
      * @var WebAuthnSession
      */
     private $webAuthnSession;
 
     public function __construct()
     {
-        $this->keyRepository = GeneralUtility::makeInstance(ObjectManager::class)
-            ->get(KeyRepository::class);
         $this->backendUserRepository = GeneralUtility::makeInstance(ObjectManager::class)
             ->get(BackendUserRepository::class);
         $this->webAuthnService = WebAuthnServiceFactory::fromGlobals();
