@@ -1,0 +1,31 @@
+<f:be.pageRenderer includeRequireJsModules="{0:'TYPO3/CMS/CvcWebauthn/WebAuthnRegistration'}"/>
+
+<div class="module">
+    <div class="module-body">
+        <f:flashMessages as="flashMessages">
+            <f:for each="{flashMessages}" as="flashMessage">
+                <div class="typo3-messages">
+                    <div
+                        class="alert {f:if(condition: '{flashMessage.severity} == 2', then: 'alert-danger', else: 'alert-success')}">
+                        <div class="media">
+                            <div class="media-left">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa {f:if(condition: '{flashMessage.severity} == 2', then: 'fa-times', else: 'fa-check')} fa-stack-1x"></i>
+                            </span>
+                            </div>
+                            <div class="media-body">
+                                <f:if condition="{flashMessage.title}">
+                                    <h4>{flashMessage.title}</h4>
+                                </f:if>
+                                <p class="alert-message">{flashMessage.message}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </f:for>
+        </f:flashMessages>
+        <f:render section="headline"/>
+        <f:render section="content"/>
+    </div>
+</div>

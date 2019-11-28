@@ -1,0 +1,58 @@
+{
+    "name": "cvc/typo3-webauthn",
+    "description": "Use this extension to login with a second factor",
+    "homepage": "https://cvc.digital",
+    "type": "typo3-cms-extension",
+    "license": "GPL-3.0-or-later",
+    "authors": [
+        {
+            "name": "CARL von CHIARI GmbH",
+            "email": "opensource@cvc.digital"
+        }
+    ],
+    "require": {
+        "php": ">=7.2,<7.4",
+        "ext-json": "^1.6",
+        "typo3/cms-backend": "^9.5.9",
+        "typo3/cms-core": "^9.5.9",
+        "typo3/cms-extbase": "^9.5.9",
+        "typo3/cms-fluid": "^9.5.9",
+        "web-auth/webauthn-lib": "^2"
+    },
+    "require-dev": {
+        "friendsofphp/php-cs-fixer": "^2.15",
+        "phpstan/phpstan": "^0.10",
+        "saschaegerer/phpstan-typo3": "^0.10.1",
+        "typo3/testing-framework": "^4",
+        "phpunit/phpunit": "^7"
+    },
+    "autoload": {
+        "psr-4": {
+            "Cvc\\Typo3\\CvcWebauthn\\": "Classes/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Cvc\\Typo3\\CvcWebAuthn\\Tests\\": "Tests"
+        }
+    },
+    "scripts": {
+        "post-autoload-dump": [
+            "TYPO3\\TestingFramework\\Composer\\ExtensionTestEnvironment::prepare"
+        ]
+    },
+    "replace": {
+        "typo3-ter/cvc_webauthn": "self.version"
+    },
+    "config": {
+        "vendor-dir": ".Build/vendor",
+        "bin-dir": ".Build/bin"
+    },
+    "extra": {
+        "typo3/cms": {
+            "extension-key": "cvc_webauthn",
+            "cms-package-dir": "{$vendor-dir}/typo3/cms",
+            "web-dir": ".Build/public"
+        }
+    }
+}

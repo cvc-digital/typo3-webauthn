@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff version="1.0" xmlns:t3="http://typo3.org/schemas/xliff">
+    <file source-language="en" datatype="plaintext" original="messages" product-name="cvc_webauthn">
+        <header/>
+        <body>
+            <trans-unit id="login.link">
+                <source>Login with a WebAuthn Authenticator</source>
+                <target>Login mit einem WebAuthn-Authentifikator</target>
+            </trans-unit>
+            <trans-unit id="login.next">
+                <source>Next</source>
+                <target>Weiter</target>
+            </trans-unit>
+            <trans-unit id="labels_table_headline">
+                <source>Your registered WebAuthn Authenticators:</source>
+                <target>Ihre registrierten WebAuthn-Authentifikator:</target>
+            </trans-unit>
+            <trans-unit id="labels_table_keydescr">
+                <source>WebAuthn Authenticator description</source>
+                <target>WebAuthn-Authentifikator-Bezeichnung</target>
+            </trans-unit>
+            <trans-unit id="labels_table_date">
+                <source>Creation date</source>
+                <target>Erstelldatum</target>
+            </trans-unit>
+            <trans-unit id="labels_table_actions">
+                <source>Actions</source>
+                <target>Aktionen</target>
+            </trans-unit>
+            <trans-unit id="labels_register_key">
+                <source>Register WebAuthn Authenticator</source>
+                <target>WebAuthn-Authentifikator registrieren</target>
+            </trans-unit>
+            <trans-unit id="labels_key_descr">
+                <source>WebAuthn Authenticator description</source>
+                <target>WebAuthn-Authentifikator-Beschreibung</target>
+            </trans-unit>
+            <trans-unit id="button_login_loading">
+                <source>WebAuthn Authenticator is being registered...</source>
+                <target>WebAuthn-Authentifikator wird registriert...</target>
+            </trans-unit>
+            <trans-unit id="labels_extension_descr">
+                <source>Checks whether the WebAuthn Authenticator is valid</source>
+                <target>Überprüft ob der WebAuthn-Authentifikator gültig ist</target>
+            </trans-unit>
+            <trans-unit id="labels_extension_title">
+                <source>Use a WebAuthn Authenticator</source>
+                <target>Einen WebAuthn-Authentifikator verwenden</target>
+            </trans-unit>
+            <trans-unit id="labels_key_content">
+                <source>WebAuthn Authenticator content</source>
+                <target>WebAuthn-Authentifikator-Inhalt</target>
+            </trans-unit>
+            <trans-unit id="template_headline_webauthn">
+                <source>WebAuthn Authenticators</source>
+                <target>WebAuthn-Authentifikator</target>
+            </trans-unit>
+            <trans-unit id="security_key_registered_success">
+                <source>WebAuthn Authenticator successfuly registered</source>
+                <target>WebAuthn-Authentifikator wurde erfolgreich registriert</target>
+            </trans-unit>
+            <trans-unit id="security_key_success_delete">
+                <source>WebAuthn Authenticator successfuly deleted</source>
+                <target>WebAuthn-Authentifikator erfolgreich gelöscht</target>
+            </trans-unit>
+            <trans-unit id="js_error_key_registered">
+                <source>WebAuthn Authenticator is already registered</source>
+                <target>WebAuthn-Authentifikator ist schon vorhanden</target>
+            </trans-unit>
+            <trans-unit id="js_error_unspecified">
+                <source>An unspecified error occurred</source>
+                <target>Ein nicht bekannter Fehler ist aufgetreten</target>
+            </trans-unit>
+            <trans-unit id="js_confirm_question">
+                <source>Are you sure?</source>
+                <target>Sind Sie sich sicher?</target>
+            </trans-unit>
+            <trans-unit id="js_confirm_dialog">
+            <source>Are you sure you want to delete this record?</source>
+            <target>Sind Sie sich sicher ob sie diesen Eintrag löschen möchten?</target>
+        </trans-unit>
+        </body>
+    </file>
+</xliff>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff version="1.0" xmlns:t3="http://typo3.org/schemas/xliff">
+    <file source-language="en" datatype="plaintext" original="messages" product-name="cms">
+        <header/>
+        <body>
+            <trans-unit id="tx_cvc_webauthn_keys.title">
+                <source>WebAuthn Authenticator</source>
+            </trans-unit>
+            <trans-unit id="tx_cvc_webauthn_keys.description">
+                <source>WebAuthn Authenticator Description</source>
+            </trans-unit>
+            <trans-unit id="tx_cvc_webauthn_keys.content">
+                <source>WebAuthn Authenticator Content</source>
+            </trans-unit>
+            <trans-unit id="tx_cvc_webauthn_keys.beUser">
+                <source>Backend User</source>
+            </trans-unit>
+            <trans-unit id="be_users.tx_cvcwebauthn_keys">
+                <source>Your WebAuthn Authenticators</source>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>

@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff version="1.0" xmlns:t3="http://typo3.org/schemas/xliff">
+    <file source-language="en" datatype="plaintext" original="messages" product-name="cvc_webauthn">
+        <header/>
+        <body>
+            <trans-unit id="login.link">
+                <source>Login with a WebAuthn Authenticator</source>
+            </trans-unit>
+            <trans-unit id="login.next">
+                <source>Next</source>
+            </trans-unit>
+            <trans-unit id="labels_table_headline">
+                <source>Your registered WebAuthn Authenticators:</source>
+            </trans-unit>
+            <trans-unit id="labels_table_keydescr">
+                <source>WebAuthn Authenticator description</source>
+            </trans-unit>
+            <trans-unit id="labels_table_date">
+                <source>Creation date</source>
+            </trans-unit>
+            <trans-unit id="labels_table_actions">
+                <source>Actions</source>
+            </trans-unit>
+            <trans-unit id="labels_register_key">
+                <source>Register WebAuthn Authenticator</source>
+            </trans-unit>
+            <trans-unit id="labels_key_descr">
+                <source>WebAuthn Authenticator description</source>
+            </trans-unit>
+            <trans-unit id="button_login_loading">
+                <source>WebAuthn Authenticator is being registered...</source>
+            </trans-unit>
+            <trans-unit id="labels_extension_descr">
+                <source>Checks whether the WebAuthn Authenticator is valid</source>
+            </trans-unit>
+            <trans-unit id="labels_extension_title">
+                <source>Use a WebAuthn Authenticator</source>
+            </trans-unit>
+            <trans-unit id="labels_key_content">
+                <source>WebAuthn Authenticator content</source>
+            </trans-unit>
+            <trans-unit id="template_headline_webauthn">
+                <source>WebAuthn Authenticators</source>
+            </trans-unit>
+            <trans-unit id="security_key_registered_success">
+                <source>WebAuthn Authenticator successfuly registered</source>
+            </trans-unit>
+            <trans-unit id="security_key_success_delete">
+                <source>WebAuthn Authenticator successfuly deleted</source>
+            </trans-unit>
+            <trans-unit id="js_error_key_registered">
+                <source>WebAuthn Authenticator is already registered</source>
+            </trans-unit>
+            <trans-unit id="js_error_unspecified">
+                <source>An unspecified error occurred</source>
+            </trans-unit>
+            <trans-unit id="js_confirm_question">
+                <source>Are you sure?</source>
+            </trans-unit>
+            <trans-unit id="js_confirm_dialog">
+                <source>Are you sure you want to delete this record?</source>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>

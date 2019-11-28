@@ -1,0 +1,35 @@
+<f:layout name="Login"/>
+
+<f:section name="loginFormFields">
+    <div class="t3js-login-error" id="t3-login-error"  style="display: none">
+        <div class="alert alert-danger">
+            <strong><f:translate key="login.error.message" /></strong>
+            <p><f:translate key="login.error.description" /></p>
+        </div>
+    </div>
+    <div class="form-group t3js-login-username-section" id="t3-login-username-section">
+        <div class="form-control-wrap">
+            <div class="form-control-holder">
+                <input type="hidden" id="t3-password" name="userident" />
+                <input type="text" id="t3-username" name="username" value="{presetUsername}"
+                    placeholder="{f:translate(key: 'login.username')}"
+                    class="form-control input-login t3js-clearable t3js-login-username-field" autofocus="autofocus"
+                    required="required"/>
+                <div class="form-notice-capslock hidden t3js-login-alert-capslock">
+                    <img src="{images.capslock}" width="14" height="14" alt="{f:translate(key: 'login.error.capslock')}"
+                        title="{f:translate(key: 'login.error.capslock')}"/>
+                </div>
+            </div>
+        </div>
+        <div class="form-group" id="t3-webauthn-next-section">
+            <button class="btn btn-block btn-login t3js-webauthn-next"
+                type="button"
+                id="t3-webauthn-next"
+                name="commandLI"
+                data-loading-text="<i class='fa fa-circle-o-notch fa-spin'></i> {f:translate(key: 'login.process')}"
+                autocomplete="off">
+                <f:translate key="login.next" extensionName="cvc_webauthn"/>
+            </button>
+        </div>
+    </div>
+</f:section>

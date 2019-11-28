@@ -1,0 +1,51 @@
+<?php
+$headerComment = <<<DOC
+WebAuthn extension for TYPO3 CMS
+Copyright (C) 2019 CARL von CHIARI GmbH
+
+This file is part of the TYPO3 CMS project.
+It is free software; you can redistribute it and/or modify it under
+the terms of the GNU General Public License, either version 3
+of the License, or any later version.
+
+For the full copyright and license information, please read the
+LICENSE file that was distributed with this source code.
+
+The TYPO3 project - inspiring people to share!
+DOC;
+
+//so we can skip the public folder while fixing code style
+$finder = PhpCsFixer\Finder::create()
+    ->exclude('public')
+    ->in(__DIR__)
+;
+
+return PhpCsFixer\Config::create()
+    ->setRules([
+        '@Symfony' => true,
+        'array_syntax' => ['syntax' => 'short'],
+        'combine_consecutive_unsets' => true,
+        'general_phpdoc_annotation_remove' => ['@author', '@package', '@subpackage'],
+        'heredoc_to_nowdoc' => true,
+        'linebreak_after_opening_tag' => true,
+        'mb_str_functions' => true,
+        'no_php4_constructor' => true,
+        'no_unreachable_default_argument_value' => true,
+        'no_useless_else' => true,
+        'no_useless_return' => true,
+        'ordered_class_elements' => true,
+        'ordered_imports' => true,
+        'php_unit_strict' => true,
+        'phpdoc_add_missing_param_annotation' => true,
+        'phpdoc_order' => true,
+        'semicolon_after_instruction' => true,
+        'simplified_null_return' => true,
+        'header_comment' => [
+            'header' => $headerComment,
+        ],
+        'yoda_style' => false,
+    ])
+    ->setRiskyAllowed(true)
+    ->setFinder(PhpCsFixer\Finder::create()->in('.'))
+    ->setUsingCache(true)
+    ;

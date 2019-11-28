@@ -1,0 +1,47 @@
+<?php
+
+/*
+ * WebAuthn extension for TYPO3 CMS
+ * Copyright (C) 2019 CARL von CHIARI GmbH
+ *
+ * This file is part of the TYPO3 CMS project.
+ * It is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU General Public License, either version 3
+ * of the License, or any later version.
+ *
+ * For the full copyright and license information, please read the
+ * LICENSE file that was distributed with this source code.
+ *
+ * The TYPO3 project - inspiring people to share!
+ */
+
+namespace Cvc\Typo3\CvcWebauthn\Backend\Middleware;
+
+use Cvc\Typo3\CvcWebauthn\Controller\WebAuthnLoginController;
+use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Message\ServerRequestInterface;
+use Psr\Http\Server\MiddlewareInterface;
+use Psr\Http\Server\RequestHandlerInterface;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
+
+class PublicBackendControllerMiddleware implements MiddlewareInterface
+{
+    /**
+     * @var WebAuthnLoginController
+     */
+    private $webAuthnLoginController;
+
+    public function __construct()
+    {
+        $this->webAuthnLoginController = GeneralUtility::makeInstance(WebAuthnLoginController::class);
+    }
+
+    public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
+    {
+        if ($request->getAttribute('routePath') === '/ajax/login/webauthn') {
+            return $this->webAuthnLoginController->requestChallenge($request);
+        }
+
+        return $handler->handle($request);
+    }
+}

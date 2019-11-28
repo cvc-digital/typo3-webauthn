@@ -1,0 +1,130 @@
+stages:
+  - lint
+  - build
+  - static_analysis
+  - test
+
+.Functional Tests Template: &functional_tests
+  stage: test
+  services:
+    - mysql:5.7
+  variables:
+    MYSQL_ROOT_PASSWORD: root
+    MYSQL_DATABASE: typo3
+  before_script:
+    # Install parallel needed for linting PHP and functional tests
+    - apt-get update -yqq && apt-get install parallel -yqq
+
+    # Install MySQL (needed for TYPO3)
+    - docker-php-ext-install mysqli
+  script:
+    - export typo3DatabaseName="typo3"
+    - export typo3DatabaseHost="mysql"
+    - export typo3DatabaseUsername="root"
+    - export typo3DatabasePassword="root"
+    - find '.Build/public/typo3conf/ext/cvc_webauthn/Tests/Functional' -wholename '*Test.php' | parallel --gnu 'echo; echo "Running functional test suite {}"; .Build/bin/phpunit -c .Build/public/typo3conf/ext/cvc_webauthn/phpunit.xml {}';
+
+.Build: &build_template
+  stage: build
+  before_script:
+    # Update repositories
+    - apt-get update -yqq
+
+    # Install git (needed by composer)
+    - apt-get install git -yqq
+
+    # Install zip (needed by composer)
+    - apt-get install zlib1g-dev libzip-dev -yqq
+    - docker-php-ext-install zip
+
+    # Install composer
+    - curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+
+    # Install MySQL (needed for TYPO3)
+    - docker-php-ext-install mysqli
+
+    # Install GNU Multiple Precision that is needed for webauthn key generation and validation
+    - apt-get install libgmp-dev -yqq
+    - docker-php-ext-install gmp
+  script:
+    - composer install --prefer-dist --no-progress
+  artifacts:
+    paths:
+      - .Build/
+
+Build PHP 7.2:
+  <<: *build_template
+  image: php:7.2
+
+Build PHP 7.3:
+  <<: *build_template
+  image: php:7.3
+
+Code Style:
+  image: php:7.3
+  stage: static_analysis
+  dependencies:
+    - Build PHP 7.3
+  script:
+    - .Build/bin/php-cs-fixer fix --config=.php_cs.dist -v --dry-run --stop-on-violation --using-cache=no
+
+Lint Editorconfig:
+  stage: lint
+  image: node:10
+  before_script:
+    - npm install -g editorconfig-checker@^3.0
+  script:
+    - editorconfig-checker -exclude '(LICENSE|^Documentation/|Resources/Public/JavaScript/webauthnauthenticate.js)'
+
+.Lint PHP Template: &lint_php_template
+  stage: lint
+  before_script:
+    # Install parallel needed for linting PHP and functional tests
+    - apt-get update -yqq && apt-get install parallel -yqq
+  script:
+    - find . -name \*.php ! -path "./.Build/*" | parallel --gnu php -d display_errors=stderr -l {} > /dev/null \;;
+
+Lint PHP 7.2:
+  <<: *lint_php_template
+  image: php:7.2
+
+Lint PHP 7.3:
+  <<: *lint_php_template
+  image: php:7.3
+
+.PHPStan: &phpstan_template
+  stage: static_analysis
+  script:
+    - php .Build/bin/phpstan analyse
+
+PHPStan PHP 7.2:
+  <<: *phpstan_template
+  image: php:7.2
+  dependencies:
+    - Build PHP 7.2
+  needs:
+    - Build PHP 7.2
+
+PHPStan PHP 7.3:
+  <<: *phpstan_template
+  image: php:7.3
+  dependencies:
+    - Build PHP 7.3
+  needs:
+    - Build PHP 7.3
+
+Functional Tests PHP 7.2:
+  <<: *functional_tests
+  image: php:7.2
+  dependencies:
+    - Build PHP 7.2
+  needs:
+    - Build PHP 7.2
+
+Functional Tests PHP 7.3:
+  <<: *functional_tests
+  image: php:7.3
+  dependencies:
+    - Build PHP 7.3
+  needs:
+    - Build PHP 7.3

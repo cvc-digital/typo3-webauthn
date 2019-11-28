@@ -1,0 +1,51 @@
+<f:layout name="main"/>
+
+<f:section name="headline">
+    <h1>
+        <f:translate id="template_headline_webauthn" />
+    </h1>
+</f:section>
+
+<f:section name="content">
+    <f:form action="create" id="tx_webauthn_form" style="display: none;">
+        <f:form.hidden name="challenge" value="{challenge}"/>
+        <f:form.textfield name="publicKey" id="tx_webauthn_form_publickey"/>
+        <f:form.textfield name="key-description" id="tx_webauthn_form_key-description"/>
+    </f:form>
+    <form class="form-inline">
+        <div class="form-group">
+            <input type="text" class="form-control" id="tx_webauthn_key-description" placeholder="{f:translate(key:'labels_key_descr')}">
+        </div>
+        <button id="register" class="btn btn-default"
+            data-loading-text="<i class='fa fa-circle-o-notch fa-spin'></i>{f:translate(key:'labels:button_login_loading')}">
+            <f:translate id="labels_register_key" />
+        </button>
+    </form>
+    <div>
+        <h2><f:translate id="labels_table_headline" /></h2>
+        <table class="table table-striped table-bordered">
+            <tr>
+                <th><f:translate id="labels_table_keydescr" /></th>
+                <th><f:translate id="labels_table_date" /></th>
+                <th><f:translate id="labels_table_actions" /> </th>
+            </tr>
+            <f:for each="{keys}" as="key">
+                <tr>
+                    <td>
+                        {key.description}
+                    </td>
+                    <td>
+                        <f:format.date>{key.crdate}</f:format.date>
+                    </td>
+                    <td>
+                        <button
+                            class="btn btn-default"
+                            data-delete-url="{f:uri.action(action: 'delete', arguments: {key: key}, controller: Backend)}">
+                            <i class="fa fa-trash"></i>
+                        </button>
+                    </td>
+                </tr>
+            </f:for>
+        </table>
+    </div>
+</f:section>

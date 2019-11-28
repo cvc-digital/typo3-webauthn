@@ -1,0 +1,12 @@
+config.tx_extbase {
+    persistence {
+        classes {
+            Cvc\Typo3\CvcWebauthn\Domain\Model\Key {
+                mapping {
+                    tableName = tx_cvcwebauthn_keys
+                    columns.crdate.mapOnProperty = crdate
+                }
+            }
+        }
+    }
+}
