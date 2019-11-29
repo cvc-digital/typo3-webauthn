@@ -5,6 +5,7 @@
 [![TYPO3 Version](https://img.shields.io/badge/TYPO3-%5E9.5-orange)](https://extensions.typo3.org/extension/cvc_webauthn)
 [![codecov](https://codecov.io/gh/cvc-digital/typo3-webauthn/branch/master/graph/badge.svg)](https://codecov.io/gh/cvc-digital/typo3-webauthn)
 [![packagist](https://img.shields.io/packagist/v/cvc/typo3-webauthn)](https://packagist.org/packages/cvc/typo3-webauthn)
+
 This TYPO3 extension gives access to a second login form which uses the [WebAuthn standard](https://webauthn.io).
 Backend users are able to login using a WebAuthn Authenticator. They also have the ability to register one or more WebAuthn Authenticators.
 This is achieved by using the [Webauthn Framework](https://github.com/web-auth/webauthn-framework).
