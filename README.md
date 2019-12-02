@@ -33,14 +33,14 @@ The Extension does not require any further configuration. After it is activated,
 
 To Login with your previously registered WebAuthn Authenticator, you have to select "Login with WebAuthn" on the login screen. Enter your username, press enter, and follow the instructions on the screen to proceed.
 
-![Picture with login process](docs/images/login.png)
+![Picture with login process](Documentation/images/login.png)
 
 ### Register credentials
 
 In the backend module "WebAuthn Authenticators" new WebAuthn Authenticators can be registered. Press on register WebAuthn Authenticator.
 If you want, you can enter a description for the credential you are about to register.
 
-![Picture with registration process](docs/images/registration.png)
+![Picture with registration process](Documentation/images/registration.png)
 
 ## Features coming soon
 - [ ] Add compatibility to TYPO3 v10.
