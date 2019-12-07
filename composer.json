@@ -52,7 +52,8 @@
         "typo3/cms": {
             "extension-key": "cvc_webauthn",
             "cms-package-dir": "{$vendor-dir}/typo3/cms",
-            "web-dir": ".Build/public"
+            "web-dir": ".Build/public",
+            "app-dir": ".Build"
         }
     }
 }
