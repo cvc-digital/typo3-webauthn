@@ -24,7 +24,8 @@
         "phpstan/phpstan": "^0.10",
         "saschaegerer/phpstan-typo3": "^0.10.1",
         "typo3/testing-framework": "^4",
-        "phpunit/phpunit": "^7"
+        "phpunit/phpunit": "^7",
+        "typo3/minimal": "^9.5.0"
     },
     "autoload": {
         "psr-4": {
@@ -52,7 +53,8 @@
         "typo3/cms": {
             "extension-key": "cvc_webauthn",
             "cms-package-dir": "{$vendor-dir}/typo3/cms",
-            "web-dir": ".Build/public"
+            "web-dir": ".Build/public",
+            "app-dir": ".Build"
         }
     }
 }
