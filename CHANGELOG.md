@@ -6,15 +6,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## 1.0.2
 
-* added a Documentation/Settings.cfg file to render the TYPO3 Documentation.
-* renamed folder Docs to Documentation
+### Added
+
+* Make extension documentation available on [docs.typo3.org](https://docs.typo3.org/p/cvc/typo3-webauthn/master/en-us/).
 
 ## 1.0.1
 
-* Changed status from alpha to stable
+### Changed
+
+* Changed status from alpha to stable.
 
 ## 1.0.0
 
 ### Added
 
-* Initial release
+* Initial release.
