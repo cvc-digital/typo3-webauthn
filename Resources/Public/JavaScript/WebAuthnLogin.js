@@ -5,8 +5,13 @@ define(['jquery',], function ($) {
     }
 
     $(function () {
-        var $nextButton = $('#t3-webauthn-next');
-        $nextButton.on('click', function (event) {
+        const $loginForm = $('#typo3-login-form');
+        const $nextButton = $('#t3-webauthn-next');
+        let authenticated = false;
+        $loginForm.on('submit', function (event) {
+            if (authenticated) {
+                return;
+            }
             event.preventDefault();
             $nextButton.button('loading');
             var username = $('#t3-username').val();
@@ -41,6 +46,7 @@ define(['jquery',], function ($) {
                                 userHandle: data.response.userHandle ? arrayToBase64String(new Uint8Array(data.response.userHandle)) : null
                             }
                         };
+                        authenticated = true;
                         $('#t3-password').val(btoa(JSON.stringify(publicKeyCredential)));
                         $('#typo3-login-form').submit();
                     }, error => {
