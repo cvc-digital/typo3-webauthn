@@ -47,7 +47,7 @@ class WebAuthnAuthenticationService extends AuthenticationService
     private $webAuthnSession;
 
     /**
-     * @var ExtensionConfiguration
+     * @var array
      */
     private $backendExtensionConfiguration;
 
