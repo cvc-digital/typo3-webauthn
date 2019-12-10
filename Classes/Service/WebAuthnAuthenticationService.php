@@ -28,7 +28,7 @@ class WebAuthnAuthenticationService extends AuthenticationService
 {
     /**
      * @var int
-     * 0 for authentication failed, 100 for not responsible, 200 for authentication success
+     *          0 for authentication failed, 100 for not responsible, 200 for authentication success
      */
     protected $serviceChainValue = 0;
     /**
