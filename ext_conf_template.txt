@@ -1,0 +1,4 @@
+# cat=basic/login; type=boolean; label=LLL:EXT:cvc_webauthn/Resources/Private/Language/ExtConfTemplate.xlf:login.secondFactorLogin
+secondFactorLogin = 1
+# cat=basic/login; type=boolean; label=LLL:EXT:cvc_webauthn/Resources/Private/Language/ExtConfTemplate.xlf:login.forcedToRegisterAuth
+forcedToRegisterAuth = 0

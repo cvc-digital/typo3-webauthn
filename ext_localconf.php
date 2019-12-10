@@ -24,7 +24,7 @@ defined('TYPO3_MODE') || die('Access denied.');
     [
         'title' => 'WebAuthn Credential Service',
         'description' => 'Manages login with WebAuthn Credentials',
-        'subtype' => 'authUserBE',
+        'subtype' => 'authUserBE, processLoginDataBE',
         'available' => true,
         'priority' => 60,
         'quality' => 50,

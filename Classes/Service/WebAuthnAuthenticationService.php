@@ -19,12 +19,18 @@ namespace Cvc\Typo3\CvcWebauthn\Service;
 
 use Cvc\Typo3\CvcWebauthn\Http\WebAuthnSession;
 use TYPO3\CMS\Core\Authentication\AuthenticationService;
+use TYPO3\CMS\Core\Configuration\ExtensionConfiguration;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Domain\Repository\BackendUserRepository;
 use TYPO3\CMS\Extbase\Object\ObjectManager;
 
 class WebAuthnAuthenticationService extends AuthenticationService
 {
+    /**
+     * @var int
+     * 0 for authentication failed, 100 for not responsible, 200 for authentication success
+     */
+    protected $serviceChainValue = 0;
     /**
      * @var BackendUserRepository
      */
@@ -40,12 +46,32 @@ class WebAuthnAuthenticationService extends AuthenticationService
      */
     private $webAuthnSession;
 
+    /**
+     * @var ExtensionConfiguration
+     */
+    private $backendExtensionConfiguration;
+
     public function __construct()
     {
         $this->backendUserRepository = GeneralUtility::makeInstance(ObjectManager::class)
             ->get(BackendUserRepository::class);
         $this->webAuthnService = WebAuthnServiceFactory::fromGlobals();
         $this->webAuthnSession = GeneralUtility::makeInstance(WebAuthnSession::class);
+        $this->backendExtensionConfiguration = GeneralUtility::makeInstance(ExtensionConfiguration::class)->get('cvc_webauthn');
+    }
+
+    public function processLoginData(array &$loginData, $passwordTransmissionStrategy)
+    {
+        $isProcessed = false;
+        if ($passwordTransmissionStrategy === 'normal') {
+            $loginData['webauthn-uident'] = GeneralUtility::_GP('webauthn-userident');
+            if ($loginData['uident'] == '') {
+                $loginData['uident'] = $loginData['webauthn-uident'];
+            }
+            $isProcessed = true;
+        }
+
+        return $isProcessed;
     }
 
     /**
@@ -53,18 +79,31 @@ class WebAuthnAuthenticationService extends AuthenticationService
      */
     public function authUser(array $user): int
     {
-        $username = (string) $user['username'];
-        $data = base64_decode($this->login['uident']);
+        if ($this->backendExtensionConfiguration['secondFactorLogin'] == '1') {
+            $this->serviceChainValue = parent::authUser($user);
 
+            if ($this->serviceChainValue == 200) {
+                $this->serviceChainValue = $this->authenticateUser((string) $user['username']);
+            }
+        } else {
+            $this->serviceChainValue = $this->authenticateUser((string) $user['username']);
+        }
+
+        return $this->serviceChainValue;
+    }
+
+    private function authenticateUser($username): int
+    {
+        $serviceChainValue = 0;
+        $data = base64_decode($this->login['webauthn-uident']);
         $beUser = $this->backendUserRepository->findOneByUserName($username);
-
         //if backendUser does not exist authentication is failed
         if ($beUser === null) {
-            return 0;
+            $serviceChainValue = 0;
         }
 
         if (!$this->webAuthnSession->hasChallenge()) {
-            return 100;
+            $serviceChainValue = 100;
         }
 
         $challenge = $this->webAuthnSession->getChallenge();
@@ -73,11 +112,12 @@ class WebAuthnAuthenticationService extends AuthenticationService
 
         try {
             $this->webAuthnService->authenticate($publicKeyCredentialRequestOptions, $data, $beUser);
+            $serviceChainValue = 200;
         } catch (\Exception $e) {
-            // authenticate() only throws exceptions. If it throws one return 100 as we are not responsible anymore for authentication
-            return 100;
+            // authenticate() only throws exceptions. If it throws one return 0 because authentication has failed.
+            $serviceChainValue = 0;
         }
-        // authentication is successful
-        return 200;
+
+        return $serviceChainValue;
     }
 }

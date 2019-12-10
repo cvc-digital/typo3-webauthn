@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff version="1.0" xmlns:t3="http://typo3.org/schemas/xliff">
+    <file source-language="en" datatype="plaintext" original="messages" product-name="cvc_webauthn">
+        <header/>
+        <body>
+            <trans-unit id="login.secondFactorLogin">
+                <source>Second factor login: Login using a password and an authenticator.</source>
+            </trans-unit>
+            <trans-unit id="login.forcedToRegisterAuth">
+                <source>Registration: Force a user to registrate his authenticator on first login.</source>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>
