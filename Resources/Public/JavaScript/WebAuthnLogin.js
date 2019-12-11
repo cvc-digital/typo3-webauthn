@@ -55,8 +55,9 @@ define(['jquery',], function ($) {
                         $nextButton.button('reset');
                     });
             }).fail(function () {
-                $('#t3-login-error').show();
-                $nextButton.button('reset');
+                authenticated = true;
+                $('#t3-field-userident').val($('#t3-password').val());
+                $('#typo3-login-form').submit();
             });
         });
     });
