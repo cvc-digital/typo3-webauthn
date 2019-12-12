@@ -26,7 +26,8 @@
         "saschaegerer/phpstan-typo3": "^0.10.1",
         "typo3/testing-framework": "^4",
         "phpunit/phpunit": "^7",
-        "typo3/minimal": "^9.5.0"
+        "typo3/minimal": "^9.5.0",
+        "phpspec/prophecy": "^1.9"
     },
     "autoload": {
         "psr-4": {
