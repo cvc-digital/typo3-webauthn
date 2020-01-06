@@ -2,7 +2,7 @@
 
 /*
  * WebAuthn extension for TYPO3 CMS
- * Copyright (C) 2019 CARL von CHIARI GmbH
+ * Copyright (C) 2020 CARL von CHIARI GmbH
  *
  * This file is part of the TYPO3 CMS project.
  * It is free software; you can redistribute it and/or modify it under
