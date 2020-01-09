@@ -22,7 +22,9 @@ use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
+use TYPO3\CMS\Core\Http\ServerRequest;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use Webauthn\Server;
 
 class PublicBackendControllerMiddlewareTest extends TestCase
 {
@@ -32,7 +34,7 @@ class PublicBackendControllerMiddlewareTest extends TestCase
         GeneralUtility::setSingletonInstance(WebAuthnLoginController::class, $webAuthnLoginController->reveal());
 
         $handlerResponse = $this->prophesize(ResponseInterface::class)->reveal();
-        $request = $this->prophesize(ServerRequestInterface::class);
+        $request = new ServerRequest();
 
         $handler = $this->prophesize(RequestHandlerInterface::class);
         $handler
@@ -40,7 +42,7 @@ class PublicBackendControllerMiddlewareTest extends TestCase
             ->willReturn($handlerResponse);
 
         $middleware = new PublicBackendControllerMiddleware();
-        $actualResponse = $middleware->process($request->reveal(), $handler->reveal());
+        $actualResponse = $middleware->process($request, $handler->reveal());
 
         static::assertSame($handlerResponse, $actualResponse);
     }
@@ -48,19 +50,19 @@ class PublicBackendControllerMiddlewareTest extends TestCase
     public function testBackendControllerResponse()
     {
         $webAuthnLoginController = $this->prophesize(WebAuthnLoginController::class);
+
         GeneralUtility::setSingletonInstance(WebAuthnLoginController::class, $webAuthnLoginController->reveal());
 
-        $handlerResponse = $this->prophesize(ResponseInterface::class)->reveal();
         $controllerResponse = $this->prophesize(ResponseInterface::class)->reveal();
-        $request = $this->prophesize(ServerRequestInterface::class);
-        $request->withAttribute('routePath', '/ajax/login/webauthn');
+        $request = new ServerRequest();
+        $request = $request->withAttribute('routePath', '/ajax/login/webauthn');
 
-        $handler = $this->prophesize(RequestHandlerInterface::class);
-        $handler->handle($request)->willReturn($controllerResponse);
+        $controller = $this->prophesize(RequestHandlerInterface::class);
+        $controller->requestChallenge()->willReturn($controllerResponse);
 
         $middleware = new PublicBackendControllerMiddleware();
-        $actualResponse = $middleware->process($request->reveal(), $handler->reveal());
+        $actualResponse = $middleware->process($request, $controller->reveal());
 
-        static::assertSame($handlerResponse, $actualResponse);
+        static::assertSame($controllerResponse, $actualResponse);
     }
 }
