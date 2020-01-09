@@ -20,11 +20,9 @@ namespace Cvc\Typo3\CvcWebauthn\Backend\Middleware;
 use Cvc\Typo3\CvcWebauthn\Controller\WebAuthnLoginController;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\ResponseInterface;
-use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 use TYPO3\CMS\Core\Http\ServerRequest;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
-use Webauthn\Server;
 
 class PublicBackendControllerMiddlewareTest extends TestCase
 {
@@ -50,18 +48,19 @@ class PublicBackendControllerMiddlewareTest extends TestCase
     public function testBackendControllerResponse()
     {
         $webAuthnLoginController = $this->prophesize(WebAuthnLoginController::class);
-
         GeneralUtility::setSingletonInstance(WebAuthnLoginController::class, $webAuthnLoginController->reveal());
 
         $controllerResponse = $this->prophesize(ResponseInterface::class)->reveal();
         $request = new ServerRequest();
         $request = $request->withAttribute('routePath', '/ajax/login/webauthn');
 
-        $controller = $this->prophesize(RequestHandlerInterface::class);
-        $controller->requestChallenge()->willReturn($controllerResponse);
+        $handler = $this->prophesize(RequestHandlerInterface::class);
+        $handler->handle($request)->willReturn($controllerResponse);
+
+        $webAuthnLoginController->requestChallenge($request)->willReturn($controllerResponse);
 
         $middleware = new PublicBackendControllerMiddleware();
-        $actualResponse = $middleware->process($request, $controller->reveal());
+        $actualResponse = $middleware->process($request, $handler->reveal());
 
         static::assertSame($controllerResponse, $actualResponse);
     }

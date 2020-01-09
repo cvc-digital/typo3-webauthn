@@ -1,3 +1,5 @@
+
+
 <?php
 
 /*
@@ -14,7 +16,7 @@
  *
  * The TYPO3 project - inspiring people to share!
  */
-
+/*
 namespace Cvc\Typo3\CvcWebauthn\Service;
 
 use PHPUnit\Framework\TestCase;
@@ -22,3 +24,4 @@ use PHPUnit\Framework\TestCase;
 class WebAuthnAuthenticationServiceTest extends TestCase
 {
 }
+*/
