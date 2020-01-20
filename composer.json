@@ -11,7 +11,7 @@
         }
     ],
     "require": {
-        "php": ">=7.2,<=7.4",
+        "php": ">=7.2,<=7.5",
         "ext-json": "*",
         "ext-gmp": "*",
         "typo3/cms-backend": "^9.5.9",
