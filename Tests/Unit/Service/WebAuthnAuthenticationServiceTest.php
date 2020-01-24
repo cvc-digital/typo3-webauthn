@@ -80,7 +80,7 @@ class WebAuthnAuthenticationServiceTest extends TestCase
             $backendExtensionConfiguration,
             $publicKeyCredentialSourceRepositoy->reveal()
         );
-        $authenticationService->initAuth('testMode', ['webauthn-uident' => 'test'], ['testAuthInfo' => 'test'], $authenticationService);
+        $authenticationService->initAuth('testMode', ['webauthn_uident' => 'test'], ['testAuthInfo' => 'test'], $authenticationService);
         $actual = $authenticationService->authUser($userToAuthenticate);
 
         static::assertSame($expected, $actual);
