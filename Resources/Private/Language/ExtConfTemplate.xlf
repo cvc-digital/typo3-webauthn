@@ -6,9 +6,6 @@
             <trans-unit id="login.secondFactorLogin">
                 <source>Second factor login: Login using a password and an authenticator.</source>
             </trans-unit>
-            <trans-unit id="login.forcedToRegisterAuth">
-                <source>Registration: Force a user to registrate his authenticator on first login.</source>
-            </trans-unit>
         </body>
     </file>
 </xliff>

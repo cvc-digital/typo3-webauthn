@@ -71,11 +71,11 @@ class WebAuthnAuthenticationService extends AuthenticationService
     {
         $isProcessed = false;
         if ($passwordTransmissionStrategy === 'normal') {
-            $loginData['webauthn-uident'] = GeneralUtility::_GP('webauthn-userident');
+            $loginData['webauthn_uident'] = GeneralUtility::_GP('webauthn_userident');
             if ($loginData['uident'] == '') {
-                $loginData['uident'] = $loginData['webauthn-uident'];
+                $loginData['uident'] = $loginData['webauthn_uident'];
             } else {
-                $loginData['uident-text'] = $loginData['uident'];
+                $loginData['uident_text'] = $loginData['uident'];
             }
             $isProcessed = true;
         }
@@ -105,7 +105,7 @@ class WebAuthnAuthenticationService extends AuthenticationService
             return 0;
         }
 
-        if ($this->backendExtensionConfiguration['secondFactorLogin'] == '0') {
+        if (!$this->backendExtensionConfiguration['secondFactorLogin']) {
             return 200;
         }
 

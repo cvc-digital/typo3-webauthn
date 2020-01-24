@@ -5,11 +5,7 @@
         <body>
             <trans-unit id="login.secondFactorLogin">
                 <source>Second factor login: Login using a password and an authenticator.</source>
-                <target>Anmeldung mit zweitem Faktor: Anmelden mit einem passwort und einem Authenticator.</target>
-            </trans-unit>
-            <trans-unit id="login.forcedToRegisterAuth">
-                <source>Registration: Force a user to registrate his authenticator on first login.</source>
-                <target>Registrierung: Zwanghafte registrierung eines Authenticators beim erstmaligen anmelden.</target>
+                <target>Anmeldung mit zweitem Faktor: Anmelden mit einem Passwort und einem Authenticator.</target>
             </trans-unit>
         </body>
     </file>
