@@ -88,6 +88,10 @@ class WebAuthnAuthenticationService extends AuthenticationService
      */
     public function authUser(array $user): int
     {
+        if (empty($this->login['webauthn_uident'])) {
+            return $this->backendExtensionConfiguration['secondFactorLogin'] ? 0 : 100;
+        }
+
         $beUser = $this->backendUserRepository->findOneByUserName((string) $user['username']);
         if ($beUser === null) {
             return 0;
@@ -100,12 +104,12 @@ class WebAuthnAuthenticationService extends AuthenticationService
             return 100;
         }
 
-        if (!$this->backendExtensionConfiguration['secondFactorLogin']) {
-            return 200;
-        }
-
         if (!$this->verifyAuthenticatorForUser($beUser)) {
             return 0;
+        }
+
+        if (!$this->backendExtensionConfiguration['secondFactorLogin']) {
+            return 200;
         }
 
         return 1;
