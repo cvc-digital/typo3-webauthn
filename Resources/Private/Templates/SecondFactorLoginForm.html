@@ -37,6 +37,7 @@
         </div>
     </div>
 
+    <f:if condition="{secondFactorLogin} == 1">
     <div class="form-group t3js-login-password-section" id="t3-login-password-section">
         <div class="form-control-wrap">
             <div class="form-control-holder">
@@ -59,6 +60,7 @@
             </div>
         </div>
     </div>
+    </f:if>
 
         <div class="form-group" id="t3-webauthn-next-section">
             <button class="btn btn-block btn-login t3js-webauthn-next"

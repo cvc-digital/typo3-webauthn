@@ -89,7 +89,6 @@ class WebAuthnAuthenticationService extends AuthenticationService
     public function authUser(array $user): int
     {
         $beUser = $this->backendUserRepository->findOneByUserName((string) $user['username']);
-
         if ($beUser === null) {
             return 0;
         }
@@ -101,12 +100,12 @@ class WebAuthnAuthenticationService extends AuthenticationService
             return 100;
         }
 
-        if (!$this->verifyAuthenticatorForUser($beUser)) {
-            return 0;
-        }
-
         if (!$this->backendExtensionConfiguration['secondFactorLogin']) {
             return 200;
+        }
+
+        if (!$this->verifyAuthenticatorForUser($beUser)) {
+            return 0;
         }
 
         return 1;
@@ -118,7 +117,7 @@ class WebAuthnAuthenticationService extends AuthenticationService
             return false;
         }
 
-        $data = base64_decode($this->login['webauthn-uident']);
+        $data = base64_decode($this->login['webauthn_uident']);
         $challenge = $this->webAuthnSession->getChallenge();
         $this->webAuthnSession->purgeChallenge();
         $publicKeyCredentialRequestOptions = $this->webAuthnService->createCredentialsRequestOptions($beUser, $challenge);

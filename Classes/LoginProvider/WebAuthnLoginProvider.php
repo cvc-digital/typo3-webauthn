@@ -33,10 +33,7 @@ class WebAuthnLoginProvider implements LoginProviderInterface
 
         $backendConfiguration = GeneralUtility::makeInstance(ExtensionConfiguration::class)->get('cvc_webauthn');
 
-        if ($backendConfiguration['secondFactorLogin']) {
-            $view->setTemplatePathAndFilename(GeneralUtility::getFileAbsFileName('EXT:cvc_webauthn/Resources/Private/Templates/SecondFactorLoginForm.html'));
-        } else {
-            $view->setTemplatePathAndFilename(GeneralUtility::getFileAbsFileName('EXT:cvc_webauthn/Resources/Private/Templates/WebAuthnLoginForm.html'));
-        }
+        $view->assign('secondFactorLogin', $backendConfiguration['secondFactorLogin']);
+        $view->setTemplatePathAndFilename(GeneralUtility::getFileAbsFileName('EXT:cvc_webauthn/Resources/Private/Templates/SecondFactorLoginForm.html'));
     }
 }
