@@ -53,14 +53,18 @@ class WebAuthnAuthenticationService extends AuthenticationService
      */
     private $publicKeyCredentialSourceRepository;
 
-    public function __construct()
-    {
-        $this->backendUserRepository = GeneralUtility::makeInstance(ObjectManager::class)
-            ->get(BackendUserRepository::class);
-        $this->webAuthnService = WebAuthnServiceFactory::fromGlobals();
-        $this->webAuthnSession = GeneralUtility::makeInstance(WebAuthnSession::class);
-        $this->backendExtensionConfiguration = GeneralUtility::makeInstance(ExtensionConfiguration::class)->get('cvc_webauthn');
-        $this->publicKeyCredentialSourceRepository = GeneralUtility::makeInstance(ObjectManager::class)->get(PublicKeyCredentialSourceRepository::class);
+    public function __construct(
+        ?BackendUserRepository $backendUserRepository = null,
+        ?WebAuthnService $webAuthnService = null,
+        ?WebAuthnSession $webAuthnSession = null,
+        array $backendExtensionConfiguration = [],
+        ?PublicKeyCredentialSourceRepository $publicKeyCredentialSourceRepository = null
+    ) {
+        $this->backendUserRepository = $backendUserRepository ?? GeneralUtility::makeInstance(ObjectManager::class)->get(BackendUserRepository::class);
+        $this->webAuthnService = $webAuthnService ?? WebAuthnServiceFactory::fromGlobals();
+        $this->webAuthnSession = $webAuthnSession ?? GeneralUtility::makeInstance(WebAuthnSession::class);
+        $this->backendExtensionConfiguration = $backendExtensionConfiguration ?? GeneralUtility::makeInstance(ExtensionConfiguration::class)->get('cvc_webauthn');
+        $this->publicKeyCredentialSourceRepository = $publicKeyCredentialSourceRepository ?? GeneralUtility::makeInstance(ObjectManager::class)->get(PublicKeyCredentialSourceRepository::class);
     }
 
     public function processLoginData(array &$loginData, $passwordTransmissionStrategy)
@@ -86,7 +90,6 @@ class WebAuthnAuthenticationService extends AuthenticationService
     {
         $beUser = $this->backendUserRepository->findOneByUserName((string) $user['username']);
 
-        //if backendUser does not exist authentication is failed
         if ($beUser === null) {
             return 0;
         }
@@ -95,26 +98,24 @@ class WebAuthnAuthenticationService extends AuthenticationService
         $authenticators = $this->publicKeyCredentialSourceRepository->findAllForUserEntity($beUserEntity);
 
         if (empty($authenticators)) {
-            return parent::authUser($user);
+            return 100;
+        }
+
+        if (!$this->verifyAuthenticatorForUser($beUser)) {
+            return 0;
         }
 
         if ($this->backendExtensionConfiguration['secondFactorLogin'] == '0') {
-            return $this->verifyAuthenticatorForUser($beUser);
+            return 200;
         }
 
-        $serviceChainValue = parent::authUser($user);
-
-        if ($serviceChainValue == 200) {
-            $serviceChainValue = $this->verifyAuthenticatorForUser($beUser);
-        }
-
-        return $serviceChainValue;
+        return 1;
     }
 
-    private function verifyAuthenticatorForUser(BackendUser $beUser): int
+    private function verifyAuthenticatorForUser(BackendUser $beUser): bool
     {
         if (!$this->webAuthnSession->hasChallenge()) {
-            return 0;
+            return false;
         }
 
         $data = base64_decode($this->login['webauthn-uident']);
@@ -125,9 +126,9 @@ class WebAuthnAuthenticationService extends AuthenticationService
         try {
             $this->webAuthnService->authenticate($publicKeyCredentialRequestOptions, $data, $beUser);
 
-            return 200;
+            return true;
         } catch (\Exception $e) {
-            return 0;
+            return false;
         }
     }
 }
