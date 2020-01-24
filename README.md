@@ -37,7 +37,9 @@ The following table lists all configurable values:
 |secondFactorLogin   | 0/1  |
 |   |   |
 
-secondFactorLogin: This controls whether the login is assisted with an additional second factor.
+#### secondFactorLogin:
+This controls whether the login is assisted with an additional second factor.
+The second factor is optional. If a user decides to not use it he can login with his password.
 
 ## Usage
 
