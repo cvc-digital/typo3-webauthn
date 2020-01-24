@@ -29,17 +29,13 @@ The Extension does not require any further configuration. After it is activated,
 
 ## Configuration
 
-You can reach the extension configuration under "settings" in the installtool of TYPO3.
-The following table lists all configurable values:
+You can reach the extension configuration under "settings" in the Install tool of TYPO3.
+The following options are available:
 
-|Configuration setting | Values  |
-|----|----:|
-|secondFactorLogin   | 0/1  |
-|   |   |
 
-#### secondFactorLogin:
-This controls whether the login is assisted with an additional second factor.
-The second factor is optional. If a user decides to not use it he can login with his password.
+* `secondFactorLogin`: If `true`, then the user must provide their username, password and WebAuthn authenticator in order to login.
+If the user has not registered any authenticator yet, then they can login without the authenticator as a second factor.
+If `false`, then the user can decide whether to login with their username and password or with their WebAuthn authenticator only.
 
 ## Usage
 
