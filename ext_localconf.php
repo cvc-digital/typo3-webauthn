@@ -24,7 +24,7 @@ defined('TYPO3_MODE') || die('Access denied.');
     [
         'title' => 'WebAuthn Credential Service',
         'description' => 'Manages login with WebAuthn Credentials',
-        'subtype' => 'authUserBE',
+        'subtype' => 'authUserBE, processLoginDataBE',
         'available' => true,
         'priority' => 60,
         'quality' => 50,
@@ -40,6 +40,9 @@ $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['backend']['loginProviders'][1569568896] 
     'icon-class' => 'fa-key',
     'label' => 'LLL:EXT:cvc_webauthn/Resources/Private/Language/locallang.xlf:login.link',
 ];
+if ($GLOBALS['TYPO3_CONF_VARS']['EXTENSIONS']['cvc_webauthn']['secondFactorLogin']) {
+    unset($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['backend']['loginProviders'][1433416747]);
+}
 
 if (!is_array($GLOBALS['TYPO3_CONF_VARS']['SYS']['caching']['cacheConfigurations']['webauthn_challenges'])) {
     $GLOBALS['TYPO3_CONF_VARS']['SYS']['caching']['cacheConfigurations']['webauthn_challenges'] = [

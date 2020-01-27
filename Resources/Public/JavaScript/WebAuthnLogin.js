@@ -14,22 +14,22 @@ define(['jquery',], function ($) {
             }
             event.preventDefault();
             $nextButton.button('loading');
-            var username = $('#t3-username').val();
+            let username = $('#t3-username').val();
             $.ajax({
                 method: 'POST',
                 url: TYPO3.settings.ajaxUrls['login_webauthn'],
                 data: {
                     username: username,
                 }
-            }).done(function(publicKey) {
-                publicKey.challenge = Uint8Array.from(window.atob(publicKey.challenge), c=>c.charCodeAt(0));
-                publicKey.allowCredentials = publicKey.allowCredentials.map(function(data) {
+            }).done(function (publicKey) {
+                publicKey.challenge = Uint8Array.from(window.atob(publicKey.challenge), c => c.charCodeAt(0));
+                publicKey.allowCredentials = publicKey.allowCredentials.map(function (data) {
                     var id = data.id
                         .replace(/-/g, '+')
                         .replace(/_/g, '/');
                     return {
                         ...data,
-                        'id': Uint8Array.from(atob(id), c=>c.charCodeAt(0))
+                        'id': Uint8Array.from(atob(id), c => c.charCodeAt(0))
                     };
                 });
 
@@ -47,15 +47,17 @@ define(['jquery',], function ($) {
                             }
                         };
                         authenticated = true;
-                        $('#t3-password').val(btoa(JSON.stringify(publicKeyCredential)));
+                        $('#t3-webauthn').val(btoa(JSON.stringify(publicKeyCredential)));
+                        $('#t3-field-userident').val($('#t3-password').val());
                         $('#typo3-login-form').submit();
                     }, error => {
                         $('#t3-login-error').show();
                         $nextButton.button('reset');
                     });
-            }).fail(function() {
-                $('#t3-login-error').show();
-                $nextButton.button('reset');
+            }).fail(function () {
+                authenticated = true;
+                $('#t3-field-userident').val($('#t3-password').val());
+                $('#typo3-login-form').submit();
             });
         });
     });

@@ -27,6 +27,16 @@ composer require cvc/typo3-webauthn
 ```
 The Extension does not require any further configuration. After it is activated, a second login provider can be used to login using a WebAuthn authenticator.
 
+## Configuration
+
+You can reach the extension configuration under "settings" in the Install tool of TYPO3.
+The following options are available:
+
+
+* `secondFactorLogin`: If `true`, then the user must provide their username, password and WebAuthn authenticator in order to login.
+If the user has not registered any authenticator yet, then they can login without the authenticator as a second factor.
+If `false`, then the user can decide whether to login with their username and password or with their WebAuthn authenticator only.
+
 ## Usage
 
 ### Login
@@ -44,5 +54,4 @@ If you want, you can enter a description for the credential you are about to reg
 
 ## Features coming soon
 - [ ] Add compatibility to TYPO3 v10.
-- [ ] Add feature toggle to make WebAuthn a second factor for the username and password login.
 - [ ] Add feature toggle to force users to register an authenticator on their first login.

@@ -19,6 +19,7 @@ namespace Cvc\Typo3\CvcWebauthn\LoginProvider;
 
 use TYPO3\CMS\Backend\Controller\LoginController;
 use TYPO3\CMS\Backend\LoginProvider\LoginProviderInterface;
+use TYPO3\CMS\Core\Configuration\ExtensionConfiguration;
 use TYPO3\CMS\Core\Page\PageRenderer;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Fluid\View\StandaloneView;
@@ -29,6 +30,10 @@ class WebAuthnLoginProvider implements LoginProviderInterface
     {
         $pageRenderer->loadRequireJsModule('TYPO3/CMS/CvcWebauthn/WebAuthnLogin');
         $pageRenderer->addCssFile(GeneralUtility::getFileAbsFileName('EXT:cvc_webauthn/Resources/Public/Css/webauthnlogin.css'), 'stylesheet', 'all', '', false, false, '', true, '', true);
+
+        $backendConfiguration = GeneralUtility::makeInstance(ExtensionConfiguration::class)->get('cvc_webauthn');
+
+        $view->assign('secondFactorLogin', $backendConfiguration['secondFactorLogin']);
         $view->setTemplatePathAndFilename(GeneralUtility::getFileAbsFileName('EXT:cvc_webauthn/Resources/Private/Templates/WebAuthnLoginForm.html'));
     }
 }

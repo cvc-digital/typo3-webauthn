@@ -1,26 +1,67 @@
 <f:layout name="Login"/>
 
 <f:section name="loginFormFields">
-    <div class="t3js-login-error" id="t3-login-error"  style="display: none">
+    <div class="t3js-login-error" id="t3-login-error" style="display: none">
         <div class="alert alert-danger">
-            <strong><f:translate key="login.error.message" /></strong>
-            <p><f:translate key="login.error.description" /></p>
+            <strong>
+                <f:translate key="login.error.message"/>
+            </strong>
+            <p>
+                <f:translate key="login.error.description"/>
+            </p>
         </div>
     </div>
+
+    <input type="hidden" id="t3-webauthn" name="webauthn_userident"/>
+
     <div class="form-group t3js-login-username-section" id="t3-login-username-section">
         <div class="form-control-wrap">
             <div class="form-control-holder">
-                <input type="hidden" id="t3-password" name="userident" />
-                <input type="text" id="t3-username" name="username" value="{presetUsername}"
-                    placeholder="{f:translate(key: 'login.username')}"
-                    class="form-control input-login t3js-clearable t3js-login-username-field" autofocus="autofocus"
-                    required="required"/>
+                <div class="form-control-clearable">
+                    <input type="text" id="t3-username" name="username" value="{presetUsername}"
+                        placeholder="{f:translate(key: 'login.username')}"
+                        class="form-control input-login t3js-clearable t3js-login-username-field" autofocus="autofocus"
+                        required="required"/>
+                    <button type="button" class="close" tabindex="-1" aria-hidden="true" style="display: none;"><span
+                        class="t3js-icon icon icon-size-small icon-state-default icon-actions-close"
+                        data-identifier="actions-close"><span class="icon-markup"><svg
+                        xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path
+                        d="M11.9 5.5L9.4 8l2.5 2.5c.2.2.2.5 0 .7l-.7.7c-.2.2-.5.2-.7 0L8 9.4l-2.5 2.5c-.2.2-.5.2-.7 0l-.7-.7c-.2-.2-.2-.5 0-.7L6.6 8 4.1 5.5c-.2-.2-.2-.5 0-.7l.7-.7c.2-.2.5-.2.7 0L8 6.6l2.5-2.5c.2-.2.5-.2.7 0l.7.7c.2.2.2.5 0 .7z"
+                        class="icon-color"></path></svg></span></span></button>
+                </div>
+                <div class="form-notice-capslock hidden t3js-login-alert-capslock">
+                    <img src="/typo3/sysext/backend/Resources/Public/Images/icon_capslock.svg" width="14" height="14"
+                        alt="Attention: Caps lock enabled!" title="Attention: Caps lock enabled!">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <f:if condition="{secondFactorLogin}">
+    <div class="form-group t3js-login-password-section" id="t3-login-password-section">
+        <div class="form-control-wrap">
+            <div class="form-control-holder">
+                <div class="form-control-clearable">
+                    <input type="password" id="t3-password" name="p_field" value="{presetPassword}"
+                        placeholder="{f:translate(key: 'login.password')}"
+                        class="form-control input-login t3js-clearable t3js-login-password-field" required="required"
+                        data-rsa-encryption="t3-field-userident"/>
+                    <button type="button" class="close" tabindex="-1" aria-hidden="true" style="display: none;"><span
+                        class="t3js-icon icon icon-size-small icon-state-default icon-actions-close"
+                        data-identifier="actions-close"><span class="icon-markup"><svg
+                        xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path
+                        d="M11.9 5.5L9.4 8l2.5 2.5c.2.2.2.5 0 .7l-.7.7c-.2.2-.5.2-.7 0L8 9.4l-2.5 2.5c-.2.2-.5.2-.7 0l-.7-.7c-.2-.2-.2-.5 0-.7L6.6 8 4.1 5.5c-.2-.2-.2-.5 0-.7l.7-.7c.2-.2.5-.2.7 0L8 6.6l2.5-2.5c.2-.2.5-.2.7 0l.7.7c.2.2.2.5 0 .7z"
+                        class="icon-color"></path></svg></span></span></button>
+                </div>
                 <div class="form-notice-capslock hidden t3js-login-alert-capslock">
                     <img src="{images.capslock}" width="14" height="14" alt="{f:translate(key: 'login.error.capslock')}"
                         title="{f:translate(key: 'login.error.capslock')}"/>
                 </div>
             </div>
         </div>
+    </div>
+    </f:if>
+
         <div class="form-group" id="t3-webauthn-next-section">
             <button class="btn btn-block btn-login t3js-webauthn-next"
                 type="submit"
