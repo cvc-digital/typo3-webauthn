@@ -195,13 +195,13 @@ class WebAuthnService
         $tokenBindnigHandler = new TokenBindingNotSupportedHandler();
 
         // Attestation Statement Support Manager
-        $attestationStatementSupportManager = $this->createAttestationStatementSupportManager($decoder, $coseAlgorithmManager);
+        $attestationStatementSupportManager = $this->createAttestationStatementSupportManager($coseAlgorithmManager);
 
         // Attestation Object Loader
-        $attestationObjectLoader = new AttestationObjectLoader($attestationStatementSupportManager, $decoder);
+        $attestationObjectLoader = new AttestationObjectLoader($attestationStatementSupportManager);
 
         // Public Key Credential Loader
-        $publicKeyCredentialLoader = new PublicKeyCredentialLoader($attestationObjectLoader, $decoder);
+        $publicKeyCredentialLoader = new PublicKeyCredentialLoader($attestationObjectLoader);
 
         // Extension Output Checker Handler
         $extensionOutputCheckerHandler = new ExtensionOutputCheckerHandler();
@@ -229,13 +229,13 @@ class WebAuthnService
         $tokenBindnigHandler = new TokenBindingNotSupportedHandler();
 
         // Attestation Statement Support Manager
-        $attestationStatementSupportManager = $this->createAttestationStatementSupportManager($decoder, $coseAlgorithmManager);
+        $attestationStatementSupportManager = $this->createAttestationStatementSupportManager($coseAlgorithmManager);
 
         // Attestation Object Loader
-        $attestationObjectLoader = new AttestationObjectLoader($attestationStatementSupportManager, $decoder);
+        $attestationObjectLoader = new AttestationObjectLoader($attestationStatementSupportManager);
 
         // Public Key Credential Loader
-        $publicKeyCredentialLoader = new PublicKeyCredentialLoader($attestationObjectLoader, $decoder);
+        $publicKeyCredentialLoader = new PublicKeyCredentialLoader($attestationObjectLoader);
 
         // Public Key Credential Source Repository
         $publicKeyCredentialSourceRepository = $this->publicKeyCredentialSourceRepository;
@@ -268,14 +268,14 @@ class WebAuthnService
         return $coseAlgorithmManager;
     }
 
-    private function createAttestationStatementSupportManager(Decoder $decoder, Manager $coseAlgorithmManager): AttestationStatementSupportManager
+    private function createAttestationStatementSupportManager(Manager $coseAlgorithmManager): AttestationStatementSupportManager
     {
         $attestationStatementSupportManager = new AttestationStatementSupportManager();
         $attestationStatementSupportManager->add(new NoneAttestationStatementSupport());
-        $attestationStatementSupportManager->add(new FidoU2FAttestationStatementSupport($decoder));
-        $attestationStatementSupportManager->add(new AndroidKeyAttestationStatementSupport($decoder));
+        $attestationStatementSupportManager->add(new FidoU2FAttestationStatementSupport());
+        $attestationStatementSupportManager->add(new AndroidKeyAttestationStatementSupport());
         $attestationStatementSupportManager->add(new TPMAttestationStatementSupport());
-        $attestationStatementSupportManager->add(new PackedAttestationStatementSupport($decoder, $coseAlgorithmManager));
+        $attestationStatementSupportManager->add(new PackedAttestationStatementSupport($coseAlgorithmManager));
 
         return $attestationStatementSupportManager;
     }

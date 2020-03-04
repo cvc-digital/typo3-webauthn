@@ -23,6 +23,7 @@ use Cvc\Typo3\CvcWebauthn\Service\WebAuthnServiceFactory;
 use TYPO3\CMS\Backend\View\BackendTemplateView;
 use TYPO3\CMS\Core\Context\Context;
 use TYPO3\CMS\Core\Context\UserAspect;
+use TYPO3\CMS\Core\Information\Typo3Version;
 use TYPO3\CMS\Core\Messaging\FlashMessage;
 use TYPO3\CMS\Core\Page\PageRenderer;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
@@ -47,7 +48,11 @@ class BackendController extends ActionController
 
     public function __construct(KeyRepository $keyRepository, BackendUserRepository $backendUserRepository)
     {
-        parent::__construct();
+        $versionNumber = GeneralUtility::makeInstance(Typo3Version::class)->getMajorVersion();
+        if ($versionNumber < 10) {
+            parent::__construct();
+        }
+
         $this->keyRepository = $keyRepository;
         $this->backendUserRepository = $backendUserRepository;
     }
@@ -70,7 +75,7 @@ JS;
         }
 
         $extName = 'cvc_webauthn';
-        $labelsToTranslateInJS = ['js_error_key_registered', 'js_error_unspecified', 'js_confirm_question', 'js_confirm_dialog'];
+        $labelsToTranslateInJS = ['js_error_key_registered', 'js_error_unspecified', 'js_confirm_question', 'js_confirm_dialog', 'js_error_no_https'];
 
         foreach ($labelsToTranslateInJS as $value) {
             $pageRenderer->addInlineLanguageLabel($value, LocalizationUtility::translate($value, $extName));

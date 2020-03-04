@@ -14,11 +14,11 @@
         "php": ">=7.2,<7.5",
         "ext-json": "*",
         "ext-gmp": "*",
-        "typo3/cms-backend": "^9.5.9",
-        "typo3/cms-core": "^9.5.9",
-        "typo3/cms-extbase": "^9.5.9",
-        "typo3/cms-fluid": "^9.5.9",
-        "web-auth/webauthn-lib": "^2"
+        "typo3/cms-backend": "^10",
+        "typo3/cms-core": "^10",
+        "typo3/cms-extbase": "^10",
+        "typo3/cms-fluid": "^10",
+        "web-auth/webauthn-lib": "^3"
     },
     "require-dev": {
         "friendsofphp/php-cs-fixer": "^2.16",
