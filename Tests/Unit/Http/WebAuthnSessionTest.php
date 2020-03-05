@@ -23,8 +23,8 @@ class WebAuthnSessionTest extends TestCase
 {
     public function testSetChallengeThrowsException()
     {
-        $this->expectException("RuntimeException");
-        $this->expectExceptionMessage("Cannot access WebAuthn session before it is initialized");
+        $this->expectException('RuntimeException');
+        $this->expectExceptionMessage('Cannot access WebAuthn session before it is initialized');
         $session = new WebAuthnSession();
         $session->setChallenge('TestChallenge');
     }
