@@ -226,7 +226,7 @@ class WebAuthnService
         $decoder = new Decoder(new TagObjectManager(), new OtherObjectManager());
 
         // The token binding handler
-        $tokenBindnigHandler = new TokenBindingNotSupportedHandler();
+        $tokenBindingHandler = new TokenBindingNotSupportedHandler();
 
         // Attestation Statement Support Manager
         $attestationStatementSupportManager = $this->createAttestationStatementSupportManager($coseAlgorithmManager);
@@ -246,8 +246,7 @@ class WebAuthnService
         // Authenticator Assertion Response Validator
         $authenticatorAssertionResponseValidator = new AuthenticatorAssertionResponseValidator(
             $publicKeyCredentialSourceRepository,
-            $decoder,
-            $tokenBindnigHandler,
+            $tokenBindingHandler,
             $extensionOutputCheckerHandler,
             $coseAlgorithmManager
         );
@@ -278,10 +277,5 @@ class WebAuthnService
         $attestationStatementSupportManager->add(new PackedAttestationStatementSupport($coseAlgorithmManager));
 
         return $attestationStatementSupportManager;
-    }
-
-    private function returnPublicKeyCredentialDescriptor(PublicKeyCredentialSource $publicKeyCredentialSource): PublicKeyCredentialDescriptor
-    {
-        return $publicKeyCredentialSource->getPublicKeyCredentialDescriptor();
     }
 }

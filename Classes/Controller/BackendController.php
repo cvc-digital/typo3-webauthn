@@ -48,11 +48,6 @@ class BackendController extends ActionController
 
     public function __construct(KeyRepository $keyRepository, BackendUserRepository $backendUserRepository)
     {
-        $versionNumber = GeneralUtility::makeInstance(Typo3Version::class)->getMajorVersion();
-        if ($versionNumber < 10) {
-            parent::__construct();
-        }
-
         $this->keyRepository = $keyRepository;
         $this->backendUserRepository = $backendUserRepository;
     }
