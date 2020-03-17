@@ -24,9 +24,9 @@
         "friendsofphp/php-cs-fixer": "^2.16",
         "phpstan/phpstan": "^0.12",
         "saschaegerer/phpstan-typo3": "^0.12",
-        "typo3/testing-framework": "^5",
-        "phpunit/phpunit": "*",
-        "typo3/minimal": "^9.5 || ^10"
+        "phpunit/phpunit": "^7",
+        "typo3/minimal": "^9.5 || ^10",
+        "nimut/testing-framework": "^5.0"
     },
     "autoload": {
         "psr-4": {
@@ -40,7 +40,8 @@
     },
     "scripts": {
         "post-autoload-dump": [
-            "TYPO3\\TestingFramework\\Composer\\ExtensionTestEnvironment::prepare"
+            "mkdir -p .Build/public/typo3conf/ext/",
+            "[ -L .Build/public/typo3conf/ext/cvc_webauthn ] || ln -snvf ../../../../. .Build/public/typo3conf/ext/cvc_webauthn"
         ]
     },
     "replace": {
