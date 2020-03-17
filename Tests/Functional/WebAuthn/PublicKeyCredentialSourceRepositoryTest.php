@@ -18,8 +18,8 @@
 namespace Cvc\Typo3\CvcWebauthn\Tests\WebAuthn;
 
 use Cvc\Typo3\CvcWebauthn\WebAuthn\PublicKeyCredentialSourceRepository;
-use Ramsey\Uuid\Uuid;
 use Nimut\TestingFramework\TestCase\FunctionalTestCase;
+use Ramsey\Uuid\Uuid;
 use Webauthn\AttestationStatement\AttestationStatement;
 use Webauthn\PublicKeyCredentialDescriptor;
 use Webauthn\PublicKeyCredentialSource;
@@ -96,7 +96,6 @@ class PublicKeyCredentialSourceRepositoryTest extends FunctionalTestCase
             ->execute();
 
         $keyDescription = $query->fetchColumn();
-
 
         /*$query = $connection
             ->select('description')
