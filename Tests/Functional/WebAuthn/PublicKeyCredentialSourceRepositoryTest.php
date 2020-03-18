@@ -80,43 +80,21 @@ class PublicKeyCredentialSourceRepositoryTest extends FunctionalTestCase
     public function testUpdateKeyDescription()
     {
         $repository = new PublicKeyCredentialSourceRepository();
-        $connection = $this->getDatabaseConnection()->getDatabaseInstance();
-        //$connection = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(ConnectionPool::class)->getConnectionForTable('tx_cvcwebauthn_keys');
+        $queryBuilderInstance = $this->getDatabaseConnection()->getDatabaseInstance();
 
         $publicKeyCredentialSource1 = $this->initializeDummyPublicKeyCredentialSource();
         $repository->saveCredentialSource($publicKeyCredentialSource1);
         $repository->updateKeyDescription($publicKeyCredentialSource1, 'TEST');
 
-        $query = $connection
+        $query = $queryBuilderInstance
             ->select('description')
             ->from('tx_cvcwebauthn_keys')
             ->where(
-                $connection->expr()->eq('public_key_credential_id', $connection->createNamedParameter(base64_encode($publicKeyCredentialSource1->getPublicKeyCredentialId())))
+                $queryBuilderInstance->expr()->eq('public_key_credential_id', $queryBuilderInstance->createNamedParameter(base64_encode($publicKeyCredentialSource1->getPublicKeyCredentialId())))
             )
             ->execute();
 
         $keyDescription = $query->fetchColumn();
-
-        /*$query = $connection
-            ->select('description')
-            ->from('tx_cvcwebauthn_keys')
-            ->where(
-                $connection->expr()->eq('public_key_credential_id', $connection->createNamedParameter(base64_encode($publicKeyCredentialSource1->getPublicKeyCredentialId())))
-            )
-            ->execute();
-
-        $keyDescription = $query->fetchColumn();*/
-
-//
-//        $queryBuilder = $connection->createQueryBuilder();
-//        $query = $queryBuilder
-//            ->select('description')
-//            ->from('tx_cvcwebauthn_keys')
-//            ->where(
-//                $queryBuilder->expr()->eq('public_key_credential_id', $queryBuilder->createNamedParameter(base64_encode($publicKeyCredentialSource1->getPublicKeyCredentialId())))
-//            )
-//            ->execute();
-
         static::assertSame('TEST', $keyDescription);
     }
 

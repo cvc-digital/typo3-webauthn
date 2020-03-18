@@ -18,6 +18,8 @@ stages:
   service:
     - mysql
   install:
+    - rm composer.lock
+    - composer install
     - composer require typo3/minimal="$TYPO3_VERSION"
     - export TYPO3_PATH_ROOT=$PWD/.Build/public
     - export typo3DatabaseName=typo3
