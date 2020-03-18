@@ -18,18 +18,16 @@ stages:
   service:
     - mysql
   install:
+    - composer require typo3/minimal="$TYPO3_VERSION"
     - export TYPO3_PATH_ROOT=$PWD/.Build/public
     - export typo3DatabaseName=typo3
     - export typo3DatabaseHost=localhost
     - export typo3DatabaseUsername=root
     - export typo3DatabasePassword=
   script:
-    - composer require typo3/minimal="$TYPO3_VERSION"
     - php .Build/bin/phpunit -c ./phpunit.xml --coverage-clover=coverage.xml
     - bash <(curl -s https://codecov.io/bash)
-  before_script:
-    - rm composer.lock
-    - composer install --no-interaction
+
 
 .Lint PHP: &lint_php
   stage: static_analysis
