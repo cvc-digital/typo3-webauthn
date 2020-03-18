@@ -1,10 +1,10 @@
 version: '3.6'
 
 services:
-  web:
-    environment:
-      - TYPO3_CONTEXT=Development
-      - typo3DatabaseHost=db
-      - typo3DatabaseName=typo3_test
-      - typo3DatabaseUsername=root
-      - typo3DatabasePassword=root
+    web:
+        environment:
+            - TYPO3_CONTEXT=Development
+            - typo3DatabaseHost=db
+            - typo3DatabaseName=typo3_test
+            - typo3DatabaseUsername=root
+            - typo3DatabasePassword=root
