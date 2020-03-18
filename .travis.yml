@@ -70,26 +70,26 @@ jobs:
       name: PHPStan (PHP 7.2)
       php: 7.2
     - <<: *functional_tests
-      name: Functional Tests (TYPO3 9, PHP 7.4)
+      name: Functional Tests (TYPO3 9.5, PHP 7.4)
       php: 7.4
-      env: TYPO3_VERSION=^9
+      env: TYPO3_VERSION=^9.5
     - <<: *functional_tests
-      name: Functional Tests (TYPO3 9, PHP 7.3)
+      name: Functional Tests (TYPO3 9.5, PHP 7.3)
       php: 7.3
-      env: TYPO3_VERSION=^9
+      env: TYPO3_VERSION=^9.5
     - <<: *functional_tests
-      name: Functional Tests (TYPO3 9, PHP 7.2)
+      name: Functional Tests (TYPO3 9.5, PHP 7.2)
       php: 7.2
-      env: TYPO3_VERSION=^9
+      env: TYPO3_VERSION=^9.5
     - <<: *functional_tests
-      name: Functional Tests (TYPO3 10, PHP 7.4)
+      name: Functional Tests (TYPO3 10.3, PHP 7.4)
       php: 7.4
-      env: TYPO3_VERSION=^10
+      env: TYPO3_VERSION=^10.3
     - <<: *functional_tests
-      name: Functional Tests (TYPO3 10, PHP 7.3)
+      name: Functional Tests (TYPO3 10.3, PHP 7.3)
       php: 7.3
-      env: TYPO3_VERSION=^10
+      env: TYPO3_VERSION=^10.3
     - <<: *functional_tests
-      name: Functional Tests (TYPO3 10, PHP 7.2)
+      name: Functional Tests (TYPO3 10.3, PHP 7.2)
       php: 7.2
-      env: TYPO3_VERSION=^10
+      env: TYPO3_VERSION=^10.3
