@@ -13,6 +13,7 @@ nfs_mount_enabled: false
 provider: default
 use_dns_when_possible: true
 timezone: ""
+webimage_extra_packages: [php7.2-gmp]
 
 
 # This config.yaml was created with ddev version v1.13.1
