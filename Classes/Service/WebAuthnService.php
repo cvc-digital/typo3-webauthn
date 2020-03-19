@@ -17,9 +17,6 @@
 
 namespace Cvc\Typo3\CvcWebauthn\Service;
 
-use CBOR\Decoder;
-use CBOR\OtherObject\OtherObjectManager;
-use CBOR\Tag\TagObjectManager;
 use Cose\Algorithm\Manager;
 use Cose\Algorithm\Signature\ECDSA;
 use Cose\Algorithm\Signature\EdDSA;
@@ -44,10 +41,12 @@ use Webauthn\AuthenticatorAttestationResponse;
 use Webauthn\AuthenticatorAttestationResponseValidator;
 use Webauthn\AuthenticatorSelectionCriteria;
 use Webauthn\PublicKeyCredentialCreationOptions;
+use Webauthn\PublicKeyCredentialDescriptor;
 use Webauthn\PublicKeyCredentialLoader;
 use Webauthn\PublicKeyCredentialParameters;
 use Webauthn\PublicKeyCredentialRequestOptions;
 use Webauthn\PublicKeyCredentialRpEntity;
+use Webauthn\PublicKeyCredentialSource;
 use Webauthn\PublicKeyCredentialUserEntity;
 use Webauthn\TokenBinding\TokenBindingNotSupportedHandler;
 
@@ -186,9 +185,6 @@ class WebAuthnService
     {
         $coseAlgorithmManager = $this->createCoseAlgorithmManager();
 
-        // Create a CBOR Decoder object
-        $decoder = new Decoder(new TagObjectManager(), new OtherObjectManager());
-
         // The token binding handler
         $tokenBindnigHandler = new TokenBindingNotSupportedHandler();
 
@@ -219,9 +215,6 @@ class WebAuthnService
     {
         // Cose Algorithm Manager
         $coseAlgorithmManager = $this->createCoseAlgorithmManager();
-
-        // Create a CBOR Decoder object
-        $decoder = new Decoder(new TagObjectManager(), new OtherObjectManager());
 
         // The token binding handler
         $tokenBindingHandler = new TokenBindingNotSupportedHandler();
@@ -275,5 +268,10 @@ class WebAuthnService
         $attestationStatementSupportManager->add(new PackedAttestationStatementSupport($coseAlgorithmManager));
 
         return $attestationStatementSupportManager;
+    }
+
+    private function returnPublicKeyCredentialDescriptor(PublicKeyCredentialSource $publicKeyCredentialSource): PublicKeyCredentialDescriptor
+    {
+        return $publicKeyCredentialSource->getPublicKeyCredentialDescriptor();
     }
 }
