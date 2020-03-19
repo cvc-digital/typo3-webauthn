@@ -99,7 +99,7 @@ class WebAuthnAuthenticationServiceTest extends TestCase
 }
 
 /**
- * @method findOneByUserName
+ * @method BackendUser findOneByUserName()
  */
 class TestBackendUserRepository extends BackendUserRepository
 {

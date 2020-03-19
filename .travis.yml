@@ -27,7 +27,8 @@ stages:
   script:
     - php .Build/bin/phpunit -c ./phpunit.xml --coverage-clover=coverage.xml
     - bash <(curl -s https://codecov.io/bash)
-
+  before_script:
+    - if [ "$dependencies" = "lowest" ]; then composer update --prefer-lowest --prefer-stable -n; fi;
 
 .Lint PHP: &lint_php
   stage: static_analysis
@@ -82,6 +83,12 @@ jobs:
       name: Functional Tests (TYPO3 9.5, PHP 7.2)
       php: 7.2
       env: TYPO3_VERSION=^9.5
+    - <<: *functional_tests
+      name: Functional Tests with lowest dependencies (TYPO3 9.5, PHP 7.2)
+      php: 7.2
+      env:
+        - dependencies=lowest
+        - TYPO3_VERSION=^9.5
     - <<: *functional_tests
       name: Functional Tests (TYPO3 10.3, PHP 7.4)
       php: 7.4

@@ -1,6 +1,6 @@
 <phpunit
     backupGlobals="true"
-    bootstrap=".Build/vendor/nimut/testing-framework/res/Configuration/FunctionalTestsBootstrap.php"
+    bootstrap=".Build/vendor/autoload.php"
     colors="true"
     convertErrorsToExceptions="true"
     convertWarningsToExceptions="true"
