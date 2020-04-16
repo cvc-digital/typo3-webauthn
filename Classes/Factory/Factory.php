@@ -18,13 +18,11 @@
 namespace Cvc\Typo3\CvcWebauthn\Factory;
 
 use Composer\Semver\Comparator;
-use Composer\Semver\VersionParser;
 use Cose\Algorithm\Manager;
 use Cose\Algorithm\Signature\ECDSA;
 use Cose\Algorithm\Signature\EdDSA;
 use Cose\Algorithm\Signature\RSA;
 use PackageVersions\Versions;
-use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
 use Webauthn\AttestationStatement\AttestationObjectLoader;
 use Webauthn\AttestationStatement\AttestationStatementSupportManager;
 use Webauthn\AuthenticationExtensions\ExtensionOutputCheckerHandler;
