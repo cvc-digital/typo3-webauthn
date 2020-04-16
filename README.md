@@ -51,7 +51,3 @@ In the backend module "WebAuthn Authenticators" new WebAuthn Authenticators can 
 If you want, you can enter a description for the credential you are about to register.
 
 ![Picture with registration process](Documentation/images/registration.png)
-
-## Features coming soon
-- [ ] Add compatibility to TYPO3 v10.
-- [ ] Add feature toggle to force users to register an authenticator on their first login.
