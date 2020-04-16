@@ -23,6 +23,10 @@
                 <source>Your WebAuthn Authenticators</source>
                 <target>Ihre WebAuthn-Authentifikatoren</target>
             </trans-unit>
+            <trans-unit id="tx_cvc_webauthn_keys.crdate">
+                <source>Creation date</source>
+                <target>Erstelldatum</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>

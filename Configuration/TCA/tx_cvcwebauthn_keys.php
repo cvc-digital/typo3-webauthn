@@ -55,6 +55,14 @@ return [
                 'foreign_field' => 'uid',
             ],
         ],
+        'crdate' => [
+            'label' => 'LLL:EXT:cvc_webauthn/Resources/Private/Language/locallang_tca.xlf:tx_cvc_webauthn_keys.crdate',
+            'config' => [
+                'readOnly' => true,
+                'eval' => 'datetime',
+                'type' => 'input',
+            ],
+        ],
     ],
     'types' => [
         '0' => [

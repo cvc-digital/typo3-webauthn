@@ -68,11 +68,13 @@ class Key extends AbstractDomainObject
         $this->description = $description;
     }
 
-    /**
-     * @return int
-     */
-    public function getCrdate()
+    public function getCrdate(): ?int
     {
         return $this->crdate;
+    }
+
+    public function setCrdate(int $crdate): void
+    {
+        $this->crdate = $crdate;
     }
 }

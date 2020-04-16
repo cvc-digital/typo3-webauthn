@@ -10,11 +10,6 @@ This TYPO3 extension gives access to a second login form which uses the [WebAuth
 Backend users are able to login using a WebAuthn Authenticator. They also have the ability to register one or more WebAuthn Authenticators.
 This is achieved by using the [Webauthn Framework](https://github.com/web-auth/webauthn-framework).
 
-## Version compatibility
-
-Current version is only compatible to TYPO3 v9.5.
-PHP `7.2` or above is required.
-
 ## Installation
 
 This extension only works when installed in composer mode. If you are not familiar using composer together with TYPO3
@@ -25,13 +20,14 @@ You can install the extension with the following command:
 ```
 composer require cvc/typo3-webauthn
 ```
+
 The Extension does not require any further configuration. After it is activated, a second login provider can be used to login using a WebAuthn authenticator.
 
 ## Configuration
 
 You can reach the extension configuration under "settings" in the Install tool of TYPO3.
-The following options are available:
 
+The following options are available:
 
 * `secondFactorLogin`: If `true`, then the user must provide their username, password and WebAuthn authenticator in order to login.
 If the user has not registered any authenticator yet, then they can login without the authenticator as a second factor.

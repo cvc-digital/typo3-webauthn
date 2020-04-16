@@ -10,3 +10,6 @@ parameters:
     - php
   paths:
     - Classes
+  excludes_analyse:
+    - Classes/Factory/Version2Factory.php
+    - Classes/Factory/Version3Factory.php

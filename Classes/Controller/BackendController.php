@@ -17,13 +17,14 @@
 
 namespace Cvc\Typo3\CvcWebauthn\Controller;
 
+use Composer\Semver\Comparator;
 use Cvc\Typo3\CvcWebauthn\Domain\Model\Key;
 use Cvc\Typo3\CvcWebauthn\Domain\Repository\KeyRepository;
 use Cvc\Typo3\CvcWebauthn\Service\WebAuthnServiceFactory;
+use PackageVersions\Versions;
 use TYPO3\CMS\Backend\View\BackendTemplateView;
 use TYPO3\CMS\Core\Context\Context;
 use TYPO3\CMS\Core\Context\UserAspect;
-use TYPO3\CMS\Core\Information\Typo3Version;
 use TYPO3\CMS\Core\Messaging\FlashMessage;
 use TYPO3\CMS\Core\Page\PageRenderer;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
@@ -48,8 +49,7 @@ class BackendController extends ActionController
 
     public function __construct(KeyRepository $keyRepository, BackendUserRepository $backendUserRepository)
     {
-        $versionNumber = GeneralUtility::makeInstance(Typo3Version::class)->getMajorVersion();
-        if ($versionNumber < 10) {
+        if (Comparator::greaterThanOrEqualTo(Versions::getVersion('typo3/cms-core'), '10')) {
             parent::__construct();
         }
 
