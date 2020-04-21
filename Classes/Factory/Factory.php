@@ -22,7 +22,7 @@ use Cose\Algorithm\Manager;
 use Cose\Algorithm\Signature\ECDSA;
 use Cose\Algorithm\Signature\EdDSA;
 use Cose\Algorithm\Signature\RSA;
-use PackageVersions\Versions;
+use Jean85\PrettyVersions;
 use Webauthn\AttestationStatement\AttestationObjectLoader;
 use Webauthn\AttestationStatement\AttestationStatementSupportManager;
 use Webauthn\AuthenticationExtensions\ExtensionOutputCheckerHandler;
@@ -50,7 +50,10 @@ abstract class Factory
 
     public static function createFactory(PublicKeyCredentialSourceRepository $publicKeyCredentialSourceRepository): self
     {
-        if (Comparator::lessThan('3', Versions::getVersion('web-auth/webauthn-lib'))) {
+        $webAuthnLibVersion = PrettyVersions::getVersion('web-auth/webauthn-lib')->getShortVersion();
+        $webAuthnLibVersion = ltrim($webAuthnLibVersion, 'v');
+
+        if (Comparator::lessThan($webAuthnLibVersion, '3.0')) {
             return new Version2Factory($publicKeyCredentialSourceRepository);
         }
 
