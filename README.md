@@ -2,7 +2,7 @@
 
 [![Build Status](https://travis-ci.org/cvc-digital/typo3-webauthn.svg?branch=master)](https://travis-ci.org/cvc-digital/typo3-webauthn)
 [![GitHub](https://img.shields.io/github/license/cvc-digital/typo3-webauthn)](https://github.com/cvc-digital/typo3-webauthn/blob/master/LICENSE)
-[![TYPO3 Version](https://img.shields.io/badge/TYPO3-%5E9.5-orange)](https://extensions.typo3.org/extension/cvc_webauthn)
+[![TYPO3 Version](https://img.shields.io/badge/TYPO3-%5E9.5%20||%20%5E10.4-orange)](https://extensions.typo3.org/extension/cvc_webauthn)
 [![codecov](https://codecov.io/gh/cvc-digital/typo3-webauthn/branch/master/graph/badge.svg)](https://codecov.io/gh/cvc-digital/typo3-webauthn)
 [![packagist](https://img.shields.io/packagist/v/cvc/typo3-webauthn)](https://packagist.org/packages/cvc/typo3-webauthn)
 

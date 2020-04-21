@@ -89,14 +89,14 @@ jobs:
         - dependencies=lowest
         - TYPO3_VERSION=^9.5
     - <<: *functional_tests
-      name: Functional Tests (TYPO3 10.3, PHP 7.4)
+      name: Functional Tests (TYPO3 10.4, PHP 7.4)
       php: 7.4
-      env: TYPO3_VERSION=^10.3
+      env: TYPO3_VERSION=^10.4
     - <<: *functional_tests
-      name: Functional Tests (TYPO3 10.3, PHP 7.3)
+      name: Functional Tests (TYPO3 10.4, PHP 7.3)
       php: 7.3
-      env: TYPO3_VERSION=^10.3
+      env: TYPO3_VERSION=^10.4
     - <<: *functional_tests
-      name: Functional Tests (TYPO3 10.3, PHP 7.2)
+      name: Functional Tests (TYPO3 10.4, PHP 7.2)
       php: 7.2
-      env: TYPO3_VERSION=^10.3
+      env: TYPO3_VERSION=^10.4
