@@ -28,7 +28,7 @@
         "saschaegerer/phpstan-typo3": "^0.12",
         "phpunit/phpunit": "^7",
         "typo3/minimal": "^9.5 || ^10.4",
-        "nimut/testing-framework": "^5.0"
+        "nimut/testing-framework": "^5.0 || dev-typo3-lts-compat"
     },
     "autoload": {
         "psr-4": {

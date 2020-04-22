@@ -18,6 +18,7 @@ stages:
   service:
     - mysql
   install:
+    - if [ "$TYPO3_VERSION" = "^10.4" ]; then composer config repositories.0 \'{"type": "github", "url": "https://github.com/helhum/TYPO3-testing-framework.git"}\'; fi;'
     - composer require typo3/minimal="$TYPO3_VERSION"
     - if [ "$dependencies" = "lowest" ]; then composer update --prefer-lowest --prefer-stable -n; fi;
     - export TYPO3_PATH_ROOT=$PWD/.Build/public
