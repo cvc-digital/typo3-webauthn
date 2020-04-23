@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+* The backend module shows a warning, when the user tries to register a key, but the connection is not secured by HTTPS.
 * Support TYPO3 v10.4
 * Support web-auth/webauthn-lib v3
 
