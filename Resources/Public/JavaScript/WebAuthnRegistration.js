@@ -1,6 +1,5 @@
 define(['jquery', 'TYPO3/CMS/Backend/Notification'], function ($, Notification) {
     var publicKey = window.tx_cvcwebauthn_publickey;
-
     var arrayToBase64String = function (a) {
         return btoa(String.fromCharCode(...a));
     };
@@ -33,36 +32,44 @@ define(['jquery', 'TYPO3/CMS/Backend/Notification'], function ($, Notification) 
         $button.on('click', function (event) {
             event.preventDefault();
             $button.button('loading');
-            navigator.credentials.create({'publicKey': publicKey})
-                .then(data => {
-                    const publicKeyCredential = {
-                        id: data.id,
-                        type: data.type,
-                        rawId: arrayToBase64String(new Uint8Array(data.rawId)),
-                        response: {
-                            clientDataJSON: arrayToBase64String(new Uint8Array(data.response.clientDataJSON)),
-                            attestationObject: arrayToBase64String(new Uint8Array(data.response.attestationObject))
-                        }
-                    };
+                if(navigator.credentials == undefined){
+                    Notification.error(
+                        'Error',
+                        TYPO3.lang.js_error_no_https
+                    );
+                    $button.button('reset');
+                } else {
+                    navigator.credentials.create({'publicKey': publicKey})
+                        .then(data => {
+                            const publicKeyCredential = {
+                                id: data.id,
+                                type: data.type,
+                                rawId: arrayToBase64String(new Uint8Array(data.rawId)),
+                                response: {
+                                    clientDataJSON: arrayToBase64String(new Uint8Array(data.response.clientDataJSON)),
+                                    attestationObject: arrayToBase64String(new Uint8Array(data.response.attestationObject))
+                                }
+                            };
 
-                    $('#tx_webauthn_form_publickey').val(btoa(JSON.stringify(publicKeyCredential)));
-                    $('#tx_webauthn_form_key-description').val($('#tx_webauthn_key-description').val());
-                    $('#tx_webauthn_form').submit();
-                }, error => {
-                    if (error.code === 11) {
-                        Notification.error(
-                            'Error',
-                            TYPO3.lang.js_error_key_registered
-                        );
-                        $button.button('reset');
-                    } else {
-                        Notification.error(
-                            'Error',
-                            TYPO3.lang.js_error_unspecified
-                        );
-                        $button.button('reset');
-                    }
-                });
+                            $('#tx_webauthn_form_publickey').val(btoa(JSON.stringify(publicKeyCredential)));
+                            $('#tx_webauthn_form_key-description').val($('#tx_webauthn_key-description').val());
+                            $('#tx_webauthn_form').submit();
+                        }, error => {
+                            if (error.code === 11) {
+                                Notification.error(
+                                    'Error',
+                                    TYPO3.lang.js_error_key_registered
+                                );
+                                $button.button('reset');
+                            } else {
+                                Notification.error(
+                                    'Error',
+                                    TYPO3.lang.js_error_unspecified
+                                );
+                                $button.button('reset');
+                            }
+                        });
+                }
         });
 
         $('[data-delete-url]').on('click', function (element) {

@@ -18,7 +18,7 @@
 defined('TYPO3_MODE') || die('Access denied.');
 
 \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addService(
-    'Cvc.'.$_EXTKEY,
+    'Cvc.CvcWebAuthn',
     'auth',
     Cvc\Typo3\CvcWebauthn\Service\WebAuthnAuthenticationService::class,
     [

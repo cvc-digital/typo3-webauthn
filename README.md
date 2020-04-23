@@ -2,18 +2,13 @@
 
 [![Build Status](https://travis-ci.org/cvc-digital/typo3-webauthn.svg?branch=master)](https://travis-ci.org/cvc-digital/typo3-webauthn)
 [![GitHub](https://img.shields.io/github/license/cvc-digital/typo3-webauthn)](https://github.com/cvc-digital/typo3-webauthn/blob/master/LICENSE)
-[![TYPO3 Version](https://img.shields.io/badge/TYPO3-%5E9.5-orange)](https://extensions.typo3.org/extension/cvc_webauthn)
+[![TYPO3 Version](https://img.shields.io/badge/TYPO3-%5E9.5%20||%20%5E10.4-orange)](https://extensions.typo3.org/extension/cvc_webauthn)
 [![codecov](https://codecov.io/gh/cvc-digital/typo3-webauthn/branch/master/graph/badge.svg)](https://codecov.io/gh/cvc-digital/typo3-webauthn)
 [![packagist](https://img.shields.io/packagist/v/cvc/typo3-webauthn)](https://packagist.org/packages/cvc/typo3-webauthn)
 
 This TYPO3 extension gives access to a second login form which uses the [WebAuthn standard](https://webauthn.io).
 Backend users are able to login using a WebAuthn Authenticator. They also have the ability to register one or more WebAuthn Authenticators.
 This is achieved by using the [Webauthn Framework](https://github.com/web-auth/webauthn-framework).
-
-## Version compatibility
-
-Current version is only compatible to TYPO3 v9.5.
-PHP `7.2` or above is required.
 
 ## Installation
 
@@ -25,13 +20,14 @@ You can install the extension with the following command:
 ```
 composer require cvc/typo3-webauthn
 ```
+
 The Extension does not require any further configuration. After it is activated, a second login provider can be used to login using a WebAuthn authenticator.
 
 ## Configuration
 
 You can reach the extension configuration under "settings" in the Install tool of TYPO3.
-The following options are available:
 
+The following options are available:
 
 * `secondFactorLogin`: If `true`, then the user must provide their username, password and WebAuthn authenticator in order to login.
 If the user has not registered any authenticator yet, then they can login without the authenticator as a second factor.
@@ -51,7 +47,3 @@ In the backend module "WebAuthn Authenticators" new WebAuthn Authenticators can 
 If you want, you can enter a description for the credential you are about to register.
 
 ![Picture with registration process](Documentation/images/registration.png)
-
-## Features coming soon
-- [ ] Add compatibility to TYPO3 v10.
-- [ ] Add feature toggle to force users to register an authenticator on their first login.

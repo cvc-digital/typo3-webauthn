@@ -21,12 +21,10 @@ use PHPUnit\Framework\TestCase;
 
 class WebAuthnSessionTest extends TestCase
 {
-    /**
-     * @expectedException \RuntimeException
-     * @expectedExceptionMessage Cannot access WebAuthn session before it is initialized
-     */
     public function testSetChallengeThrowsException()
     {
+        $this->expectException('RuntimeException');
+        $this->expectExceptionMessage('Cannot access WebAuthn session before it is initialized');
         $session = new WebAuthnSession();
         $session->setChallenge('TestChallenge');
     }

@@ -18,9 +18,8 @@
 namespace Cvc\Typo3\CvcWebauthn\Tests\WebAuthn;
 
 use Cvc\Typo3\CvcWebauthn\WebAuthn\PublicKeyCredentialSourceRepository;
+use Nimut\TestingFramework\TestCase\FunctionalTestCase;
 use Ramsey\Uuid\Uuid;
-use TYPO3\CMS\Core\Database\ConnectionPool;
-use TYPO3\TestingFramework\Core\Functional\FunctionalTestCase;
 use Webauthn\AttestationStatement\AttestationStatement;
 use Webauthn\PublicKeyCredentialDescriptor;
 use Webauthn\PublicKeyCredentialSource;
@@ -81,23 +80,21 @@ class PublicKeyCredentialSourceRepositoryTest extends FunctionalTestCase
     public function testUpdateKeyDescription()
     {
         $repository = new PublicKeyCredentialSourceRepository();
-        $connection = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(ConnectionPool::class)->getConnectionForTable('tx_cvcwebauthn_keys');
+        $queryBuilderInstance = $this->getDatabaseConnection()->getDatabaseInstance();
 
         $publicKeyCredentialSource1 = $this->initializeDummyPublicKeyCredentialSource();
         $repository->saveCredentialSource($publicKeyCredentialSource1);
         $repository->updateKeyDescription($publicKeyCredentialSource1, 'TEST');
 
-        $queryBuilder = $connection->createQueryBuilder();
-        $query = $queryBuilder
+        $query = $queryBuilderInstance
             ->select('description')
             ->from('tx_cvcwebauthn_keys')
             ->where(
-                $queryBuilder->expr()->eq('public_key_credential_id', $queryBuilder->createNamedParameter(base64_encode($publicKeyCredentialSource1->getPublicKeyCredentialId())))
+                $queryBuilderInstance->expr()->eq('public_key_credential_id', $queryBuilderInstance->createNamedParameter(base64_encode($publicKeyCredentialSource1->getPublicKeyCredentialId())))
             )
             ->execute();
 
         $keyDescription = $query->fetchColumn();
-
         static::assertSame('TEST', $keyDescription);
     }
 

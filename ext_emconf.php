@@ -22,13 +22,13 @@ $EM_CONF[$_EXTKEY] = [
     'state' => 'stable',
     'author' => 'CARL von CHIARI GmbH',
     'author_email' => 'opensource@cvc.digital',
-    'version' => '1.1.0',
+    'version' => '1.2.0',
     'uploadfolder' => true,
     'constraints' => [
         'depends' => [
-            'typo3' => '9.5.0-9.99.99',
-            'extbase' => '9.5.0-9.99.99',
-            'backend' => '9.5.0-9.99.99',
+            'typo3' => '9.5.0-10.4.99',
+            'extbase' => '9.5.0-10.4.99',
+            'backend' => '9.5.0-10.4.99',
         ],
         'conflicts' => [],
         'suggests' => [],

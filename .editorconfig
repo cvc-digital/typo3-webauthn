@@ -11,5 +11,5 @@ trim_trailing_whitespace = true
 indent_style = unset
 indent_size = unset
 
-[*.{yml,neon}]
+[*.{yml,yaml,neon}]
 indent_size = 2

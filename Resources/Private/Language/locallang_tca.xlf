@@ -18,6 +18,9 @@
             <trans-unit id="be_users.tx_cvcwebauthn_keys">
                 <source>Your WebAuthn Authenticators</source>
             </trans-unit>
+            <trans-unit id="tx_cvc_webauthn_keys.crdate">
+                <source>Creation date</source>
+            </trans-unit>
         </body>
     </file>
 </xliff>

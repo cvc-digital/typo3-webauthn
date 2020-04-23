@@ -60,6 +60,9 @@
             <trans-unit id="js_confirm_dialog">
                 <source>Are you sure you want to delete this record?</source>
             </trans-unit>
+            <trans-unit id="js_error_no_https">
+                <source>WebAuthn registration only works with HTTPS</source>
+            </trans-unit>
         </body>
     </file>
 </xliff>

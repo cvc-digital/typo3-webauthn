@@ -19,7 +19,7 @@
 
 if (TYPO3_MODE === 'BE') {
     \TYPO3\CMS\Extbase\Utility\ExtensionUtility::registerModule(
-        'Cvc.Typo3.'.$_EXTKEY,
+        'Cvc.Typo3.CvcWebauthn',
         'system',
         'WebAuthn',
         'after:BeuserTxBeuser',
@@ -28,8 +28,8 @@ if (TYPO3_MODE === 'BE') {
         ],
         [
             'access' => 'user,group',
-            'icon' => 'EXT:'.$_EXTKEY.'/ext_icon.svg',
-            'labels' => 'LLL:EXT:'.$_EXTKEY.'/Resources/Private/Language/locallang_mod.xml',
+            'icon' => 'EXT:cvc_webauthn/ext_icon.svg',
+            'labels' => 'LLL:EXT:cvc_webauthn/Resources/Private/Language/locallang_mod.xlf',
         ]
     );
 }

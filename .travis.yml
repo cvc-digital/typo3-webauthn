@@ -19,6 +19,7 @@ stages:
     - mysql
   install:
     - composer require typo3/minimal="$TYPO3_VERSION"
+    - if [ "$dependencies" = "lowest" ]; then composer update --prefer-lowest --prefer-stable -n; fi;
     - export TYPO3_PATH_ROOT=$PWD/.Build/public
     - export typo3DatabaseName=typo3
     - export typo3DatabaseHost=localhost
@@ -70,14 +71,32 @@ jobs:
       name: PHPStan (PHP 7.2)
       php: 7.2
     - <<: *functional_tests
-      name: Functional Tests (TYPO3 9, PHP 7.4)
+      name: Functional Tests (TYPO3 9.5, PHP 7.4)
       php: 7.4
-      env: TYPO3_VERSION=^9
+      env: TYPO3_VERSION=^9.5
     - <<: *functional_tests
-      name: Functional Tests (TYPO3 9, PHP 7.3)
+      name: Functional Tests (TYPO3 9.5, PHP 7.3)
       php: 7.3
-      env: TYPO3_VERSION=^9
+      env: TYPO3_VERSION=^9.5
     - <<: *functional_tests
-      name: Functional Tests (TYPO3 9, PHP 7.2)
+      name: Functional Tests (TYPO3 9.5, PHP 7.2)
       php: 7.2
-      env: TYPO3_VERSION=^9
+      env: TYPO3_VERSION=^9.5
+    - <<: *functional_tests
+      name: Functional Tests with lowest dependencies (TYPO3 9.5, PHP 7.2)
+      php: 7.2
+      env:
+        - dependencies=lowest
+        - TYPO3_VERSION=^9.5
+    - <<: *functional_tests
+      name: Functional Tests (TYPO3 10.4, PHP 7.4)
+      php: 7.4
+      env: TYPO3_VERSION=^10.4
+    - <<: *functional_tests
+      name: Functional Tests (TYPO3 10.4, PHP 7.3)
+      php: 7.3
+      env: TYPO3_VERSION=^10.4
+    - <<: *functional_tests
+      name: Functional Tests (TYPO3 10.4, PHP 7.2)
+      php: 7.2
+      env: TYPO3_VERSION=^10.4

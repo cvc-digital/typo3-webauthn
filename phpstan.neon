@@ -2,9 +2,14 @@ includes:
   - .Build/vendor/saschaegerer/phpstan-typo3/extension.neon
 
 parameters:
+  ignoreErrors:
+    - '#Call to an undefined static method [a-zA-Z0-9\\_]+::__construct\(\)#'
   level: 5
   bootstrap: phpstan-bootstrap.php
   fileExtensions:
     - php
   paths:
     - Classes
+  excludes_analyse:
+    - Classes/Factory/Version2Factory.php
+    - Classes/Factory/Version3Factory.php

@@ -17,41 +17,23 @@
 
 namespace Cvc\Typo3\CvcWebauthn\Service;
 
-use CBOR\Decoder;
-use CBOR\OtherObject\OtherObjectManager;
-use CBOR\Tag\TagObjectManager;
-use Cose\Algorithm\Manager;
-use Cose\Algorithm\Signature\ECDSA;
-use Cose\Algorithm\Signature\EdDSA;
-use Cose\Algorithm\Signature\RSA;
 use Cose\Algorithms;
+use Cvc\Typo3\CvcWebauthn\Factory\Factory;
 use Cvc\Typo3\CvcWebauthn\WebAuthn\PublicKeyCredentialSourceRepository;
 use TYPO3\CMS\Core\Http\ServerRequest;
 use TYPO3\CMS\Core\Http\Uri;
 use TYPO3\CMS\Extbase\Domain\Model\BackendUser;
-use Webauthn\AttestationStatement\AndroidKeyAttestationStatementSupport;
-use Webauthn\AttestationStatement\AttestationObjectLoader;
-use Webauthn\AttestationStatement\AttestationStatementSupportManager;
-use Webauthn\AttestationStatement\FidoU2FAttestationStatementSupport;
-use Webauthn\AttestationStatement\NoneAttestationStatementSupport;
-use Webauthn\AttestationStatement\PackedAttestationStatementSupport;
-use Webauthn\AttestationStatement\TPMAttestationStatementSupport;
 use Webauthn\AuthenticationExtensions\AuthenticationExtensionsClientInputs;
-use Webauthn\AuthenticationExtensions\ExtensionOutputCheckerHandler;
 use Webauthn\AuthenticatorAssertionResponse;
-use Webauthn\AuthenticatorAssertionResponseValidator;
 use Webauthn\AuthenticatorAttestationResponse;
-use Webauthn\AuthenticatorAttestationResponseValidator;
 use Webauthn\AuthenticatorSelectionCriteria;
 use Webauthn\PublicKeyCredentialCreationOptions;
 use Webauthn\PublicKeyCredentialDescriptor;
-use Webauthn\PublicKeyCredentialLoader;
 use Webauthn\PublicKeyCredentialParameters;
 use Webauthn\PublicKeyCredentialRequestOptions;
 use Webauthn\PublicKeyCredentialRpEntity;
 use Webauthn\PublicKeyCredentialSource;
 use Webauthn\PublicKeyCredentialUserEntity;
-use Webauthn\TokenBinding\TokenBindingNotSupportedHandler;
 
 class WebAuthnService
 {
@@ -68,10 +50,16 @@ class WebAuthnService
      */
     private $publicKeyCredentialSourceRepository;
 
+    /**
+     * @var Factory
+     */
+    private $factory;
+
     public function __construct(string $name, string $id, PublicKeyCredentialSourceRepository $publicKeyCredentialSourceRepository)
     {
         $this->rpEntity = new PublicKeyCredentialRpEntity($name, $id);
         $this->publicKeyCredentialSourceRepository = $publicKeyCredentialSourceRepository;
+        $this->factory = Factory::createFactory($this->publicKeyCredentialSourceRepository);
     }
 
     public function createCredentialCreationOptions(BackendUser $backendUser, ?string $challenge = null): PublicKeyCredentialCreationOptions
@@ -118,7 +106,8 @@ class WebAuthnService
 
     public function register(PublicKeyCredentialCreationOptions $publicKeyCredentialCreationOptions, string $data, string $keyDescription)
     {
-        [$publicKeyCredentialLoader, $authenticatorAttestationResponseValidator] = $this->createLoaderAndValidator();
+        $publicKeyCredentialLoader = $this->factory->getPublicKeyCredentialLoader();
+        $authenticatorAttestationResponseValidator = $this->factory->getAuthenticatorAttestationResponseValidator();
 
         // init PSR7 request
         try {
@@ -144,7 +133,8 @@ class WebAuthnService
     public function authenticate(PublicKeyCredentialRequestOptions $publicKeyCredentialRequestOptions, string $data, BackendUser $beUser)
     {
         $user = $this->createUserEntity($beUser);
-        [$publicKeyCredentialLoader, $authenticatorAssertionResponseValidator] = $this->createaLoaderAndAssertionValidator();
+        $publicKeyCredentialLoader = $this->factory->getPublicKeyCredentialLoader();
+        $authenticatorAssertionResponseValidator = $this->factory->getAuthenticatorAssertionResponseValidator();
 
         // init PSR7 request
         try {
@@ -160,7 +150,7 @@ class WebAuthnService
 
             $authenticatorAssertionResponseValidator->check(
                 $publicKeyCredential->getRawId(),
-                $publicKeyCredential->getResponse(),
+                $assertionResponse,
                 $publicKeyCredentialRequestOptions,
                 $psr7Request,
                 $user->getId()
@@ -182,102 +172,6 @@ class WebAuthnService
     private function createChellenge(): string
     {
         return bin2hex(random_bytes(static::CHALLENGE_LENGTH));
-    }
-
-    private function createLoaderAndValidator(): array
-    {
-        $coseAlgorithmManager = $this->createCoseAlgorithmManager();
-
-        // Create a CBOR Decoder object
-        $decoder = new Decoder(new TagObjectManager(), new OtherObjectManager());
-
-        // The token binding handler
-        $tokenBindnigHandler = new TokenBindingNotSupportedHandler();
-
-        // Attestation Statement Support Manager
-        $attestationStatementSupportManager = $this->createAttestationStatementSupportManager($decoder, $coseAlgorithmManager);
-
-        // Attestation Object Loader
-        $attestationObjectLoader = new AttestationObjectLoader($attestationStatementSupportManager, $decoder);
-
-        // Public Key Credential Loader
-        $publicKeyCredentialLoader = new PublicKeyCredentialLoader($attestationObjectLoader, $decoder);
-
-        // Extension Output Checker Handler
-        $extensionOutputCheckerHandler = new ExtensionOutputCheckerHandler();
-
-        // Authenticator Attestation Response Validator
-        $authenticatorAttestationResponseValidator = new AuthenticatorAttestationResponseValidator(
-            $attestationStatementSupportManager,
-            $this->publicKeyCredentialSourceRepository,
-            $tokenBindnigHandler,
-            $extensionOutputCheckerHandler
-        );
-
-        return [$publicKeyCredentialLoader, $authenticatorAttestationResponseValidator];
-    }
-
-    private function createaLoaderAndAssertionValidator(): array
-    {
-        // Cose Algorithm Manager
-        $coseAlgorithmManager = $this->createCoseAlgorithmManager();
-
-        // Create a CBOR Decoder object
-        $decoder = new Decoder(new TagObjectManager(), new OtherObjectManager());
-
-        // The token binding handler
-        $tokenBindnigHandler = new TokenBindingNotSupportedHandler();
-
-        // Attestation Statement Support Manager
-        $attestationStatementSupportManager = $this->createAttestationStatementSupportManager($decoder, $coseAlgorithmManager);
-
-        // Attestation Object Loader
-        $attestationObjectLoader = new AttestationObjectLoader($attestationStatementSupportManager, $decoder);
-
-        // Public Key Credential Loader
-        $publicKeyCredentialLoader = new PublicKeyCredentialLoader($attestationObjectLoader, $decoder);
-
-        // Public Key Credential Source Repository
-        $publicKeyCredentialSourceRepository = $this->publicKeyCredentialSourceRepository;
-
-        // Extension Output Checker Handler
-        $extensionOutputCheckerHandler = new ExtensionOutputCheckerHandler();
-
-        // Authenticator Assertion Response Validator
-        $authenticatorAssertionResponseValidator = new AuthenticatorAssertionResponseValidator(
-            $publicKeyCredentialSourceRepository,
-            $decoder,
-            $tokenBindnigHandler,
-            $extensionOutputCheckerHandler,
-            $coseAlgorithmManager
-        );
-
-        return [$publicKeyCredentialLoader, $authenticatorAssertionResponseValidator];
-    }
-
-    private function createCoseAlgorithmManager(): Manager
-    {
-        $coseAlgorithmManager = new Manager();
-        $coseAlgorithmManager->add(new ECDSA\ES256());
-        $coseAlgorithmManager->add(new ECDSA\ES512());
-        $coseAlgorithmManager->add(new EdDSA\EdDSA());
-        $coseAlgorithmManager->add(new RSA\RS1());
-        $coseAlgorithmManager->add(new RSA\RS256());
-        $coseAlgorithmManager->add(new RSA\RS512());
-
-        return $coseAlgorithmManager;
-    }
-
-    private function createAttestationStatementSupportManager(Decoder $decoder, Manager $coseAlgorithmManager): AttestationStatementSupportManager
-    {
-        $attestationStatementSupportManager = new AttestationStatementSupportManager();
-        $attestationStatementSupportManager->add(new NoneAttestationStatementSupport());
-        $attestationStatementSupportManager->add(new FidoU2FAttestationStatementSupport($decoder));
-        $attestationStatementSupportManager->add(new AndroidKeyAttestationStatementSupport($decoder));
-        $attestationStatementSupportManager->add(new TPMAttestationStatementSupport());
-        $attestationStatementSupportManager->add(new PackedAttestationStatementSupport($decoder, $coseAlgorithmManager));
-
-        return $attestationStatementSupportManager;
     }
 
     private function returnPublicKeyCredentialDescriptor(PublicKeyCredentialSource $publicKeyCredentialSource): PublicKeyCredentialDescriptor
