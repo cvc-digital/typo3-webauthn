@@ -24,7 +24,7 @@ class Key extends AbstractDomainObject
     /**
      * Content of the Key.
      *
-     * @var string;
+     * @var string
      */
     protected $content;
 
