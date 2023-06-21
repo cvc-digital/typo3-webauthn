@@ -1,5 +1,8 @@
 # WebAuthn TYPO3 Extension
 
+Archived this repo as TYPO3 natively supports this feature.
+[Multi factor authentication](https://docs.typo3.org/m/typo3/reference-coreapi/main/en-us/ApiOverview/Authentication/MultiFactorAuthentication.html)
+
 [![Build Status](https://travis-ci.org/cvc-digital/typo3-webauthn.svg?branch=master)](https://travis-ci.org/cvc-digital/typo3-webauthn)
 [![GitHub](https://img.shields.io/github/license/cvc-digital/typo3-webauthn)](https://github.com/cvc-digital/typo3-webauthn/blob/master/LICENSE)
 [![TYPO3 Version](https://img.shields.io/badge/TYPO3-%5E9.5%20||%20%5E10.4-orange)](https://extensions.typo3.org/extension/cvc_webauthn)
